@@ -12,9 +12,9 @@ public class PageFarms {
     /**
      * New Farm button
      */
-    //Get real xpath
-    @FindBy(xpath = "")
+    @FindBy(xpath = "id('button-1300-btnInnerEl')")
     private WebElement newFarmButton;
+
     /**
      * Launch farm button
      * */
@@ -42,12 +42,20 @@ public class PageFarms {
     }
 
     /**
-     * Create new Farm
+     * Open Farm Designer for a new farm
      */
-    public void createFarm() {
+    public void startCreateFarm() {
         System.out.println(driver.getTitle());
 
-        //methods to set up and launch a new farm
+        newFarmButton.click();
+
+        try{
+            Thread.sleep(3000);
+        }
+
+        catch (Exception e) {
+            System.out.println(e);
+        }
 
     }
 
@@ -57,7 +65,7 @@ public class PageFarms {
     public void launchFarm(String FarmName) {
         System.out.println(driver.getTitle());
 
-        //Methods to launch a farm that is passedw as input
+        //Methods to launch a farm that is passed as input
 
     }
 

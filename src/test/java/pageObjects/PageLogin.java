@@ -1,6 +1,7 @@
 package pageObjects;
 
 //import org.junit.Assert;
+import java.lang.InterruptedException;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -15,30 +16,26 @@ public class PageLogin {
     /**
      * Login field
      */
-    //Refactor xpath
-    @FindBy(xpath = "/html/body[@id='ext-element-1']/div[@id='form-1014']/div[@id='form-1014-body']/div[@id='form-1014-outerCt']/div[@id='form-1014-innerCt']/fieldset[@id='fieldset-1015']/div[@id='fieldset-1015-body']/div[@id='fieldset-1015-outerCt']/div[@id='fieldset-1015-innerCt']/div[@id='textfield-1017']/div[@id='textfield-1017-bodyEl']/div[@id='textfield-1017-triggerWrap']/div[@id='textfield-1017-inputWrap']/input[@id='textfield-user-login-inputEl']")
+    @FindBy(xpath = "id('textfield-user-login-inputEl')")
     private WebElement loginField;
 
     /**
      * Password field
      */
-    //Refactor xpath
-    @FindBy(xpath = "/html/body[@id='ext-element-1']/div[@id='form-1014']/div[@id='form-1014-body']/div[@id='form-1014-outerCt']/div[@id='form-1014-innerCt']/fieldset[@id='fieldset-1015']/div[@id='fieldset-1015-body']/div[@id='fieldset-1015-outerCt']/div[@id='fieldset-1015-innerCt']/div[@id='textfield-1018']/div[@id='textfield-1018-bodyEl']/div[@id='textfield-1018-triggerWrap']/div[@id='textfield-1018-inputWrap']/input[@id='textfield-user-password-inputEl']")
+    @FindBy(xpath = "id('textfield-user-password-inputEl')")
     private WebElement passwordField;
 
 
     /**
      * Login button
      */
-    //Refactor xpath
-    @FindBy(xpath = "/html/body[@id='ext-element-1']/div[@id='form-1014']/div[@id='container-1028']/div[@id='container-1028-innerCt']/div[@id='container-1028-targetEl']/a[@id='button-1030']")
+    @FindBy(xpath = "id('button-1030-btnEl')")
     private WebElement loginButton;
 
     /**
      * Error message
      */
-    //Refactor xpath
-    @FindBy(xpath = "/html/body[@id='ext-element-1']/div[@id='tooltip-1035']/div[@id='tooltip-1035-body']")
+    @FindBy(xpath = "id('tooltip-1035-body')")
     public WebElement loginError;
 
     public PageLogin(WebDriver driver) {
@@ -50,10 +47,21 @@ public class PageLogin {
      * User login
      */
     public void loginUser(String LOGIN, String PASSWORD) {
+
         System.out.println(driver.getTitle());
+
         loginField.sendKeys(LOGIN);
         passwordField.sendKeys(PASSWORD);
         loginButton.sendKeys(Keys.ENTER);
+
+        PageFactory.initElements(driver, this);
+        try{
+            Thread.sleep(3000);
+        }
+
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     /**

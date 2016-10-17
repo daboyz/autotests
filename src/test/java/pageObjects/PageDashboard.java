@@ -12,14 +12,12 @@ public class PageDashboard {
     /**
      * Farms tab
      * */
-    //Refactor xpath
-    @FindBy(xpath = "") //Get real xpath
+    @FindBy(xpath = "id('button-1160-btnInnerEl')")
     private WebElement farmsTab;
 
     /**
      * Error message
      */
-    //Refactor xpath
     @FindBy(xpath = "") //Get real xpath
     public WebElement navigationError;
 
@@ -31,10 +29,18 @@ public class PageDashboard {
     /**
      * Switch to Farms
      */
-    public void switchToElement() {
+    public void switchToFarms() {
         System.out.println(driver.getTitle());
+        farmsTab.click();
 
-        //switch to tab method that accepts web elements (tabs) as input to switch to
+        try{
+            Thread.sleep(3000);
+        }
+
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     /**

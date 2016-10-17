@@ -2,16 +2,16 @@ package testCases;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import pageObjects.PageLogin;
+import pageObjects.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-import org.testng.annotations.*;
+import org.junit.*;
 
-public class TestCreateAndLaunchFarm {
+public class TestCreateAndLaunchFarm extends Watchman {
 
     private WebDriver driver;
     private String BASE_URL = "";
@@ -20,7 +20,7 @@ public class TestCreateAndLaunchFarm {
     private String LOCAL_USER = "";
 
     public TestCreateAndLaunchFarm() {
-        //Use maven? Use current user?
+
         Properties prop = new Properties();
         InputStream input = null;
 
@@ -50,11 +50,21 @@ public class TestCreateAndLaunchFarm {
     /**
      * Successful create and launch Farm test
      */
-    @Test
+    @Test //(description = "Create and launch Farm successfully")
     public void createAndLaunchFarmSuccess() {
-        driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get(BASE_URL);         //Login start
+        driver = new FirefoxDriver();   //Driver factory needs to be implemented
+        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.get(BASE_URL);
+
+        try{
+            Thread.sleep(3000);
+        }
+
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
+        //Login start
         PageLogin pageLogin =  new PageLogin(driver); //The driver should be given by driver factory not login test
 
         if (!driver.getCurrentUrl().contains(BASE_URL)) {
@@ -66,9 +76,58 @@ public class TestCreateAndLaunchFarm {
         pageLogin.loginUser(USER_LOGIN, USER_PASSWORD);
 
         if (!driver.getCurrentUrl().contains(BASE_URL + "/#/dashboard")) {
-            System.out.println("Login did not result in redirect to Dashboard after valid login");
+            System.out.println("Successful login did not result in redirect to Environment Dashboard"); //Sometimes exception sometimes println
         }
         //Login end
+
+        PageDashboard pageDashboard =  new PageDashboard(driver);
+        pageDashboard.switchToFarms();
+        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/farms")) {
+            System.out.println("Clicking Farms tab did not result in redirect to Farms page");
+        }
+
+        try{
+            Thread.sleep(3000);
+        }
+
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
+        PageFarms pageFarms =  new PageFarms(driver);
+
+        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/farms")) {
+            throw new IllegalStateException(
+                    "This is not the Farms page"
+            );
+        }
+
+        pageFarms.startCreateFarm();
+
+        try{
+            Thread.sleep(3000);
+        }
+
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
+        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/farms/designer")) {
+            System.out.println("Clicking New Farm did not result in opening Farm Designer"); //Sometimes exception sometimes println
+        }
+
+        PageFarmDesigner pageFarmDesigner =  new PageFarmDesigner(driver);
+        pageFarmDesigner.createAndLaunchNewTestFarm();
+
+
+
+        /*
+        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/farms")) {
+            throw new IllegalStateException(
+                    "This is not the Farms page"
+            );
+        }
+        */
         //The rest of create and launch tests
     }
 }

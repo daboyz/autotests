@@ -6,11 +6,12 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.*;
+import org.junit.*;
+import org.openqa.selenium.support.PageFactory;
 import pageObjects.PageLogin;
 import org.openqa.selenium.WebDriver;
 
-public class TestLogin {
+public class TestLogin extends Watchman {
 
     private WebDriver driver;
     private String BASE_URL = "";
@@ -20,7 +21,7 @@ public class TestLogin {
     private String LOCAL_USER = "";
 
     public TestLogin() {
-        //Use maven? Use current user?
+
         Properties prop = new Properties();
         InputStream input = null;
 
@@ -51,11 +52,19 @@ public class TestLogin {
     /**
      * Successful login test
      */
-    @Test
+    //@Test //(description = "Successful user login")
     public void loginUserSuccess() {
         driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(BASE_URL);
+
+        try{
+            Thread.sleep(3000);
+        }
+
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
         PageLogin pageLogin =  new PageLogin(driver);
 
         if (!driver.getCurrentUrl().contains(BASE_URL)) {
@@ -67,20 +76,28 @@ public class TestLogin {
         pageLogin.loginUser(USER_LOGIN, USER_PASSWORD);
 
         if (!driver.getCurrentUrl().contains(BASE_URL + "/#/dashboard")) {
-            System.out.println("Login did not result in redirect to Dashboard after valid login");
+            System.out.println("Successful login did not result in redirect to Environment Dashboard");
         }
-
         //loginPage.checkErrorMessage(errorMessage);
     }
 
     /**
      * Login with incorrect password test
      */
-    @Test
+    //@Test //(description = "Failed user login")
     public void loginUserFailure() {
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(BASE_URL);
+
+        try{
+            Thread.sleep(3000);
+        }
+
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
         PageLogin pageLogin =  new PageLogin(driver);
 
         if (!driver.getCurrentUrl().contains(BASE_URL)) {
@@ -94,7 +111,6 @@ public class TestLogin {
         if (!driver.getCurrentUrl().contains(BASE_URL) || !pageLogin.loginError.isDisplayed()) {
             System.out.println("Login with incorrect password did not result in error message or redirected elsewhere");
         }
-
         //loginPage.checkErrorMessage(errorMessage);
     }
 }
