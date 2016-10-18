@@ -48,8 +48,6 @@ public class PageLogin {
      */
     public void loginUser(String LOGIN, String PASSWORD) {
 
-        System.out.println(driver.getTitle());
-
         loginField.sendKeys(LOGIN);
         passwordField.sendKeys(PASSWORD);
         loginButton.sendKeys(Keys.ENTER);
@@ -62,6 +60,8 @@ public class PageLogin {
         catch (Exception e) {
             System.out.println(e);
         }
+
+        System.out.println(driver.getTitle());
     }
 
     /**

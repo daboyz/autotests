@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 import org.junit.*;
 
 public class TestCreateAndLaunchFarm extends Watchman {
@@ -56,6 +55,8 @@ public class TestCreateAndLaunchFarm extends Watchman {
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(BASE_URL);
 
+        System.out.println(driver.getTitle());
+
         try{
             Thread.sleep(3000);
         }
@@ -82,16 +83,9 @@ public class TestCreateAndLaunchFarm extends Watchman {
 
         PageDashboard pageDashboard =  new PageDashboard(driver);
         pageDashboard.switchToFarms();
+
         if (!driver.getCurrentUrl().contains(BASE_URL + "/#/farms")) {
             System.out.println("Clicking Farms tab did not result in redirect to Farms page");
-        }
-
-        try{
-            Thread.sleep(3000);
-        }
-
-        catch (Exception e) {
-            System.out.println(e);
         }
 
         PageFarms pageFarms =  new PageFarms(driver);
@@ -119,6 +113,7 @@ public class TestCreateAndLaunchFarm extends Watchman {
         PageFarmDesigner pageFarmDesigner =  new PageFarmDesigner(driver);
         pageFarmDesigner.createAndLaunchNewTestFarm();
 
+        pageFarms.checkForFarmLaunchConfirmation();
 
 
         /*

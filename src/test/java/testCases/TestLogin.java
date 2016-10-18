@@ -56,6 +56,7 @@ public class TestLogin extends Watchman {
     public void loginUserSuccess() {
         driver = new FirefoxDriver();
         driver.get(BASE_URL);
+        System.out.println(driver.getTitle());
 
         try{
             Thread.sleep(3000);
@@ -89,6 +90,7 @@ public class TestLogin extends Watchman {
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(BASE_URL);
+        System.out.println(driver.getTitle());
 
         try{
             Thread.sleep(3000);

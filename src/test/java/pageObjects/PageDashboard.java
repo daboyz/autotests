@@ -12,7 +12,7 @@ public class PageDashboard {
     /**
      * Farms tab
      * */
-    @FindBy(xpath = "id('button-1160-btnInnerEl')")
+    @FindBy(xpath = "//span[text()='Farms']")
     private WebElement farmsTab;
 
     /**
@@ -30,7 +30,7 @@ public class PageDashboard {
      * Switch to Farms
      */
     public void switchToFarms() {
-        System.out.println(driver.getTitle());
+
         farmsTab.click();
 
         try{
@@ -40,6 +40,8 @@ public class PageDashboard {
         catch (Exception e) {
             System.out.println(e);
         }
+
+        System.out.println(driver.getTitle());
 
     }
 
