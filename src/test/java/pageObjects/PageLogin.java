@@ -1,8 +1,5 @@
 package pageObjects;
 
-//import org.junit.Assert;
-import java.lang.InterruptedException;
-
 import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -77,7 +74,7 @@ public class PageLogin {
         boolean status = loginError.isDisplayed();
         if (status = false) return status;
 
-            else{
+            else {
                 Assert.assertTrue("Error message should contain information about login or password error",
                         loginError.getText().contains("Incorrect login or password"));
                 status = loginError.getText().contains("Incorrect login or password");

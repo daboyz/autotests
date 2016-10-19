@@ -82,8 +82,6 @@ public class PageFarmDesigner {
      */
     public void createAndLaunchNewTestFarm(String testFarmName) {
 
-
-
         fieldFarmName.sendKeys("test-farm-" + testFarmName);
 
         fieldProject.click();

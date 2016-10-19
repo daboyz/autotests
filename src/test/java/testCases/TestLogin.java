@@ -4,16 +4,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.junit.*;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.PageFactory;
 import pageObjects.PageLogin;
 import org.openqa.selenium.WebDriver;
-import ru.stqa.selenium.factory.WebDriverFactory;
 import ru.stqa.selenium.factory.WebDriverPool;
 
 public class TestLogin extends Watchman {
@@ -112,7 +107,6 @@ public class TestLogin extends Watchman {
         }
 
         pageLogin.loginUser(USER_LOGIN, USER_INCORRECT_PASSWORD);
-
 
         if (!driver.getCurrentUrl().contains(BASE_URL) || !pageLogin.checkLoginErrorMessage()) {
             System.out.println("Login with incorrect password did not result in error message or redirected elsewhere");

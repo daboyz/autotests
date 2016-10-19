@@ -70,7 +70,6 @@ public class PageFarms {
     public void launchFarm(String FarmName) {
         System.out.println(driver.getTitle());
 
-        //Methods to launch a farm that is passed as input
     }
 
     /**
@@ -90,7 +89,6 @@ public class PageFarms {
 
         driver.findElement(By.xpath("(//span[text()='Terminate'])[2]")).click();
 
-        //Method that accepts farm name and stops it
     }
 
     /**
