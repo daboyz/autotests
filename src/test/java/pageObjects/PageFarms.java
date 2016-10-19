@@ -1,6 +1,7 @@
 package pageObjects;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -75,8 +76,19 @@ public class PageFarms {
     /**
      * Stop Farm
      */
-    public void stopFarm(String FarmName) {
-        System.out.println(driver.getTitle());
+    public void stopFarm(String farmName) {
+
+        driver.findElement(By.xpath("//div[text()='test-farm-" + farmName+ "']/../../..//div[@data-qtip='Terminate']")).click();
+
+        try{
+            Thread.sleep(1000);
+        }
+
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
+        driver.findElement(By.xpath("(//span[text()='Terminate'])[2]")).click();
 
         //Method that accepts farm name and stops it
     }

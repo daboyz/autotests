@@ -1,22 +1,30 @@
 package testCases;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import pageObjects.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 import org.junit.*;
+import ru.stqa.selenium.factory.WebDriverPool;
 
 public class TestCreateAndLaunchFarm extends Watchman {
 
-    private WebDriver driver;
-    private String BASE_URL = "";
-    private String USER_LOGIN = "";
-    private String USER_PASSWORD = "";
-    private String LOCAL_USER = "";
+    private static WebDriver driver;
+    private static String BASE_URL = "";
+    private static String USER_LOGIN = "";
+    private static String USER_PASSWORD = "";
+    private static String USER_INCORRECT_PASSWORD = "";
+    private static String LOCAL_USER = "";
+    private String GENERATED_FARM_NAME = "";
 
     public TestCreateAndLaunchFarm() {
 
@@ -46,27 +54,22 @@ public class TestCreateAndLaunchFarm extends Watchman {
         System.setProperty("webdriver.gecko.driver", "/Users/" + LOCAL_USER + "/Downloads/geckodriver");
     }
 
-    /**
-     * Successful create and launch Farm test
-     */
-    @Test //(description = "Create and launch Farm successfully")
-    public void createAndLaunchFarmSuccess() {
-        driver = new FirefoxDriver();   //Driver factory needs to be implemented
-        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    @Before
+    public void logIn() {
+        Capabilities firefox = DesiredCapabilities.firefox();
+        driver = WebDriverPool.DEFAULT.getDriver(firefox);
+
         driver.get(BASE_URL);
 
         System.out.println(driver.getTitle());
 
-        try{
+        try {
             Thread.sleep(3000);
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
-        //Login start
-        PageLogin pageLogin =  new PageLogin(driver); //The driver should be given by driver factory not login test
+        PageLogin pageLogin = new PageLogin(driver);
 
         if (!driver.getCurrentUrl().contains(BASE_URL)) {
             throw new IllegalStateException(
@@ -79,7 +82,14 @@ public class TestCreateAndLaunchFarm extends Watchman {
         if (!driver.getCurrentUrl().contains(BASE_URL + "/#/dashboard")) {
             System.out.println("Successful login did not result in redirect to Environment Dashboard"); //Sometimes exception sometimes println
         }
-        //Login end
+
+    }
+
+    /**
+     * Successful create and launch Farm test
+     */
+    @Test //(description = "Create and launch Farm successfully")
+    public void createAndLaunchFarmSuccess() {
 
         PageDashboard pageDashboard =  new PageDashboard(driver);
         pageDashboard.switchToFarms();
@@ -111,10 +121,16 @@ public class TestCreateAndLaunchFarm extends Watchman {
         }
 
         PageFarmDesigner pageFarmDesigner =  new PageFarmDesigner(driver);
-        pageFarmDesigner.createAndLaunchNewTestFarm();
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        Date date = new Date();
+        GENERATED_FARM_NAME = dateFormat.format(date);
+
+        pageFarmDesigner.createAndLaunchNewTestFarm(GENERATED_FARM_NAME);
 
         pageFarms.checkForFarmLaunchConfirmation();
 
+        pageFarms.stopFarm(GENERATED_FARM_NAME);
 
         /*
         if (!driver.getCurrentUrl().contains(BASE_URL + "/#/farms")) {
@@ -123,6 +139,10 @@ public class TestCreateAndLaunchFarm extends Watchman {
             );
         }
         */
-        //The rest of create and launch tests
+    }
+
+    @AfterClass
+    public static void closeBrowser(){
+        WebDriverPool.DEFAULT.dismissAll();
     }
 }

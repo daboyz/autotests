@@ -20,14 +20,13 @@ public class PageFarmDesigner {
     /**
      * Farm Name Field
      */
-    @FindBy(xpath = "id('textfield-1323-inputEl')")
-    //@FindBy(xpath = "//input[@name='name' and @role='textbox']")
+    @FindBy(xpath = "//input[contains(@class,'x-form-field x-form-text x-form-text-default') and @name='name']")
     private WebElement fieldFarmName;
 
     /**
      * Project field
      * */
-    @FindBy(xpath = "id('combobox-1336-inputEl')")
+    @FindBy(xpath = "(//span[text()='Project']/../..//input[@name='projectId'])[2]")
     private WebElement fieldProject;
 
     /**
@@ -51,8 +50,7 @@ public class PageFarmDesigner {
     /**
      * Cloud avail zones dropdown
      */
-    @FindBy(xpath = "id('comboradio-1608-trigger-picker')")
-    //@FindBy(xpath = "//input[@name='availabilityZone']/../div[contains(@id,'trigger-picker')]")
+    @FindBy(xpath = "//input[@name='availabilityZone']")
     public WebElement cloudAvailZoneCombo;
 
     /**
@@ -82,11 +80,11 @@ public class PageFarmDesigner {
     /**
      * Create and launch a new farm
      */
-    public void createAndLaunchNewTestFarm() {
+    public void createAndLaunchNewTestFarm(String testFarmName) {
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        Date date = new Date();
-        fieldFarmName.sendKeys("test-farm-" + dateFormat.format(date));
+
+
+        fieldFarmName.sendKeys("test-farm-" + testFarmName);
 
         fieldProject.click();
         fieldProject.sendKeys(Keys.ARROW_DOWN, Keys.ENTER);

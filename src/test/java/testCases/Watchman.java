@@ -5,6 +5,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,6 +28,7 @@ public class Watchman {
     public static void setUp() throws IOException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         Date date = new Date();
+
         f = new File("test_results.htm");
         bw = new BufferedWriter(new FileWriter(f, true));
         bw.write("<html><body>");

@@ -3,6 +3,7 @@ package pageObjects;
 //import org.junit.Assert;
 import java.lang.InterruptedException;
 
+import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,27 +17,27 @@ public class PageLogin {
     /**
      * Login field
      */
-    @FindBy(xpath = "id('textfield-user-login-inputEl')")
+    @FindBy(xpath = "//input[@name='scalrLogin']")
     private WebElement loginField;
 
     /**
      * Password field
      */
-    @FindBy(xpath = "id('textfield-user-password-inputEl')")
+    @FindBy(xpath = "//input[@name='scalrPass']")
     private WebElement passwordField;
 
 
     /**
      * Login button
      */
-    @FindBy(xpath = "id('button-1030-btnEl')")
+    @FindBy(xpath = "(//span[text()='Login'])[2]")
     private WebElement loginButton;
 
     /**
      * Error message
      */
-    @FindBy(xpath = "id('tooltip-1035-body')")
-    public WebElement loginError;
+    @FindBy(xpath = "//div[contains(., 'Incorrect login or password')]")
+    private WebElement loginError;
 
     public PageLogin(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -61,18 +62,27 @@ public class PageLogin {
             System.out.println(e);
         }
 
+        PageFactory.initElements(driver, loginError);
         System.out.println(driver.getTitle());
     }
 
     /**
      * Check for error message
-     * @return {@link LoginPage}
+     * @return {bool}
      */
-    /*public LoginPage checkErrorMessage(String errorMessage) {
+    public boolean checkLoginErrorMessage() {
+        //boolean status;
         Assert.assertTrue("Error message should be present",
                 loginError.isDisplayed());
-        Assert.assertTrue("Error message should contain " + errorMessage,
-                loginError.getText().contains(errorMessage));
-        return this;
-    }*/
+        boolean status = loginError.isDisplayed();
+        if (status = false) return status;
+
+            else{
+                Assert.assertTrue("Error message should contain information about login or password error",
+                        loginError.getText().contains("Incorrect login or password"));
+                status = loginError.getText().contains("Incorrect login or password");
+                return status;
+            }
+
+    }
 }

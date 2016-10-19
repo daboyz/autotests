@@ -5,11 +5,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.junit.*;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
 import pageObjects.PageLogin;
 import org.openqa.selenium.WebDriver;
+import ru.stqa.selenium.factory.WebDriverFactory;
+import ru.stqa.selenium.factory.WebDriverPool;
 
 public class TestLogin extends Watchman {
 
@@ -50,21 +55,30 @@ public class TestLogin extends Watchman {
     }
 
     /**
-     * Successful login test
+     * Test preparation (opening login page)
      */
-    //@Test //(description = "Successful user login")
-    public void loginUserSuccess() {
-        driver = new FirefoxDriver();
+    @Before
+    public void openLoginPage() {
+        Capabilities firefox = DesiredCapabilities.firefox();
+        driver = WebDriverPool.DEFAULT.getDriver(firefox);
+        driver.manage().deleteAllCookies();
         driver.get(BASE_URL);
+
         System.out.println(driver.getTitle());
 
-        try{
+        try {
             Thread.sleep(3000);
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
+
+    }
+
+    /**
+     * Successful login test
+     */
+    @Test //(description = "Successful user login")
+    public void loginUserSuccess() {
 
         PageLogin pageLogin =  new PageLogin(driver);
 
@@ -80,25 +94,14 @@ public class TestLogin extends Watchman {
             System.out.println("Successful login did not result in redirect to Environment Dashboard");
         }
         //loginPage.checkErrorMessage(errorMessage);
+
     }
 
     /**
      * Login with incorrect password test
      */
-    //@Test //(description = "Failed user login")
+    @Test //(description = "Failed user login")
     public void loginUserFailure() {
-        driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get(BASE_URL);
-        System.out.println(driver.getTitle());
-
-        try{
-            Thread.sleep(3000);
-        }
-
-        catch (Exception e) {
-            System.out.println(e);
-        }
 
         PageLogin pageLogin =  new PageLogin(driver);
 
@@ -110,9 +113,20 @@ public class TestLogin extends Watchman {
 
         pageLogin.loginUser(USER_LOGIN, USER_INCORRECT_PASSWORD);
 
-        if (!driver.getCurrentUrl().contains(BASE_URL) || !pageLogin.loginError.isDisplayed()) {
+
+        if (!driver.getCurrentUrl().contains(BASE_URL) || !pageLogin.checkLoginErrorMessage()) {
             System.out.println("Login with incorrect password did not result in error message or redirected elsewhere");
         }
         //loginPage.checkErrorMessage(errorMessage);
+
     }
+
+    /**
+     * Test finalization (close browser)
+     */
+    @AfterClass
+    public static void closeBrowser(){
+        WebDriverPool.DEFAULT.dismissAll();
+    }
+
 }
