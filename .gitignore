@@ -3,3 +3,4 @@
 target/*
 config.properties
 test_results.htm
+autotests.iml
