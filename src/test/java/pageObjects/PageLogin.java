@@ -72,7 +72,7 @@ public class PageLogin {
         Assert.assertTrue("Error message should be present",
                 loginError.isDisplayed());
         boolean status = loginError.isDisplayed();
-        if (status = false) return status;
+        if (!status) return status;
 
             else {
                 Assert.assertTrue("Error message should contain information about login or password error",

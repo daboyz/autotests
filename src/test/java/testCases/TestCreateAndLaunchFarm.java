@@ -22,7 +22,6 @@ public class TestCreateAndLaunchFarm extends Watchman {
     private static String USER_LOGIN = "";
     private static String USER_PASSWORD = "";
     private static String USER_INCORRECT_PASSWORD = "";
-    private static String LOCAL_USER = "";
     private String GENERATED_FARM_NAME = "";
 
     public TestCreateAndLaunchFarm() {
@@ -37,7 +36,6 @@ public class TestCreateAndLaunchFarm extends Watchman {
             this.BASE_URL = prop.getProperty("BASE_URL");
             this.USER_LOGIN = prop.getProperty("USER_LOGIN");
             this.USER_PASSWORD = prop.getProperty("USER_PASSWORD");
-            this.LOCAL_USER = prop.getProperty("LOCAL_USER");
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -50,7 +48,7 @@ public class TestCreateAndLaunchFarm extends Watchman {
                 }
             }
         }
-        System.setProperty("webdriver.gecko.driver", "/Users/" + LOCAL_USER + "/Downloads/geckodriver");
+        System.setProperty("webdriver.gecko.driver", "/Library/geckodriver/geckodriver");
     }
 
     @Before
@@ -142,6 +140,7 @@ public class TestCreateAndLaunchFarm extends Watchman {
 
     @AfterClass
     public static void closeBrowser(){
+
         WebDriverPool.DEFAULT.dismissAll();
     }
 }

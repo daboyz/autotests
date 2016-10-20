@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import org.openqa.selenium.Capabilities;
+//import org.openqa.selenium.Capabilities;
 import org.junit.*;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import pageObjects.PageLogin;
@@ -18,7 +18,6 @@ public class TestLogin extends Watchman {
     private String USER_LOGIN = "";
     private String USER_PASSWORD = "";
     private String USER_INCORRECT_PASSWORD = "";
-    private String LOCAL_USER = "";
 
     public TestLogin() {
 
@@ -33,7 +32,6 @@ public class TestLogin extends Watchman {
             this.USER_LOGIN = prop.getProperty("USER_LOGIN");
             this.USER_PASSWORD = prop.getProperty("USER_PASSWORD");
             this.USER_INCORRECT_PASSWORD = prop.getProperty("USER_INCORRECT_PASSWORD");
-            this.LOCAL_USER = prop.getProperty("LOCAL_USER");
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -46,7 +44,7 @@ public class TestLogin extends Watchman {
                 }
             }
         }
-        System.setProperty("webdriver.gecko.driver", "/Users/" + LOCAL_USER + "/Downloads/geckodriver");
+        System.setProperty("webdriver.gecko.driver", "/Library/geckodriver/geckodriver");
     }
 
     /**
@@ -54,8 +52,8 @@ public class TestLogin extends Watchman {
      */
     @Before
     public void openLoginPage() {
-        Capabilities firefox = DesiredCapabilities.firefox();
-        driver = WebDriverPool.DEFAULT.getDriver(firefox);
+
+        driver = WebDriverPool.DEFAULT.getDriver(DesiredCapabilities.firefox());
         driver.manage().deleteAllCookies();
         driver.get(BASE_URL);
 

@@ -100,4 +100,25 @@ public class PageFarms {
         Assert.assertTrue("Launch message should be present",
                 farmLaunchSuccessMessage.isDisplayed());
     }
+
+    /**
+     * Check for error message
+     * @return {bool}
+     */
+    public boolean checkFarmLaunchErrorMessage() {
+        //boolean status;
+        Assert.assertTrue("Error message should be present",
+                farmLaunchError.isDisplayed());
+        boolean status = farmLaunchError.isDisplayed();
+        if (!status) return status;
+
+        else {
+            Assert.assertTrue("Error message should contain information about login or password error",
+                    farmLaunchError.getText().contains("Incorrect login or password"));
+            status = farmLaunchError.getText().contains("Incorrect login or password");
+            return status;
+        }
+
+    }
+
 }

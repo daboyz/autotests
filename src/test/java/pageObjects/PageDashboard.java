@@ -1,5 +1,6 @@
 package pageObjects;
 
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -47,13 +48,21 @@ public class PageDashboard {
 
     /**
      * Check for error message
-     * @return {@link LoginPage}
+     * @return {bool}
      */
-    /*public LoginPage checkErrorMessage(String errorMessage) {
+    public boolean checkNavErrorMessage() {
+        //boolean status;
         Assert.assertTrue("Error message should be present",
-                loginError.isDisplayed());
-        Assert.assertTrue("Error message should contain " + errorMessage,
-                loginError.getText().contains(errorMessage));
-        return this;
-    }*/
+                navigationError.isDisplayed());
+        boolean status = navigationError.isDisplayed();
+        if (!status) return status;
+
+        else {
+            Assert.assertTrue("Error message should contain information about login or password error",
+                    navigationError.getText().contains("Incorrect login or password"));
+            status = navigationError.getText().contains("Incorrect login or password");
+            return status;
+        }
+
+    }
 }

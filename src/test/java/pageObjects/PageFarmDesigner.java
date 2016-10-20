@@ -1,5 +1,6 @@
 package pageObjects;
 
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -71,6 +72,12 @@ public class PageFarmDesigner {
      */
     @FindBy(xpath = "//span[text()='Save & launch']")
     public WebElement saveAndLaunch;
+
+    /**
+     * Farm create failure message
+     */
+    @FindBy(xpath = "")
+    private WebElement farmcreateFailureMessage;
 
     public PageFarmDesigner(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -153,13 +160,21 @@ public class PageFarmDesigner {
 
     /**
      * Check for error message
-     * @return {@link LoginPage}
+     * @return {bool}
      */
-    /*public LoginPage checkErrorMessage(String errorMessage) {
+    public boolean checkFarmLaunchErrorMessage() {
+        //boolean status;
         Assert.assertTrue("Error message should be present",
-                loginError.isDisplayed());
-        Assert.assertTrue("Error message should contain " + errorMessage,
-                loginError.getText().contains(errorMessage));
-        return this;
-    }*/
+                farmcreateFailureMessage.isDisplayed());
+        boolean status = farmcreateFailureMessage.isDisplayed();
+        if (!status) return status;
+
+        else {
+            Assert.assertTrue("Error message should contain information about login or password error",
+                    farmcreateFailureMessage.getText().contains("Incorrect login or password"));
+            status = farmcreateFailureMessage.getText().contains("Incorrect login or password");
+            return status;
+        }
+
+    }
 }
