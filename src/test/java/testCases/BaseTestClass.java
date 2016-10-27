@@ -8,14 +8,17 @@ import java.util.Date;
 import java.util.Properties;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import pageObjects.PageLogin;
 import ru.stqa.selenium.factory.WebDriverPool;
 
 public class BaseTestClass {
@@ -35,7 +38,6 @@ public class BaseTestClass {
         InputStream input = null;
 
         try {
-
             input = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/config.properties");
             prop.load(input);
             BASE_URL = prop.getProperty("BASE_URL");
@@ -43,9 +45,12 @@ public class BaseTestClass {
             USER_PASSWORD = prop.getProperty("USER_PASSWORD");
             USER_INCORRECT_PASSWORD = prop.getProperty("USER_INCORRECT_PASSWORD");
 
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             ex.printStackTrace();
-        } finally {
+
+        }
+        finally {
             if (input != null) {
                 try {
                     input.close();
@@ -72,6 +77,23 @@ public class BaseTestClass {
 
     }
 
+    public void logIn() {
+
+        PageLogin pageLogin = new PageLogin(driver);
+
+        if (!driver.getCurrentUrl().contains(BASE_URL)) {
+            throw new IllegalStateException(
+                    "This is not the login page"
+            );
+        }
+
+        pageLogin.loginUser(USER_LOGIN, USER_PASSWORD);
+
+        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/dashboard")) {
+            System.out.println("Successful login did not result in redirect to Environment Dashboard"); //Sometimes exception sometimes println
+        }
+    }
+
     @BeforeClass
     public static void setUp() throws IOException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
@@ -83,12 +105,19 @@ public class BaseTestClass {
         bw.write("<h1>Test Case Status: " + dateFormat.format(date) + "</h1>");
     }
 
+    /**
+     * Test finalization (close browser)
+     */
+    @AfterClass
+    public static void closeBrowser(){
+        WebDriverPool.DEFAULT.dismissAll();
+    }
+
     @AfterClass
     public static void tearDown() throws IOException
     {
         bw.write("</body></html>");
         bw.close();
-        //Desktop.getDesktop().browse(f.toURI());
     }
 
     @Rule public TestRule watchman = new TestWatcher() {
@@ -99,7 +128,7 @@ public class BaseTestClass {
 
         @Override protected void succeeded(Description description) {
             try {
-                bw.write(description.getDisplayName() + " " + "passed!");
+                bw.write(description.getDisplayName() + " " + "passed");
                 bw.write("<br/>");
             }
             catch (Exception e1) {

@@ -34,7 +34,7 @@ public class PageDashboard {
 
         farmsTab.click();
 
-        try{
+        try {
             Thread.sleep(3000);
         }
         catch (Exception e) {

@@ -29,7 +29,7 @@ public class TestLogin extends BaseTestClass {
 
         pageLogin.loginUser(USER_LOGIN, USER_PASSWORD);
 
-        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/dashboard")) {
+        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/dashboard")) {   //Move to base class
             System.out.println("Successful login did not result in redirect to Environment Dashboard");
         }
         //loginPage.checkErrorMessage(errorMessage);
@@ -58,13 +58,4 @@ public class TestLogin extends BaseTestClass {
         //loginPage.checkErrorMessage(errorMessage);
 
     }
-
-    /**
-     * Test finalization (close browser)
-     */
-    @AfterClass
-    public static void closeBrowser(){
-        WebDriverPool.DEFAULT.dismissAll();
-    }
-
 }

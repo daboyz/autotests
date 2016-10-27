@@ -17,47 +17,10 @@ import ru.stqa.selenium.factory.WebDriverPool;
 
 public class TestCreateAndLaunchFarm extends BaseTestClass {
 
-
     private String GENERATED_FARM_NAME = "";
 
     public TestCreateAndLaunchFarm() {
-
-        Properties prop = new Properties();
-        InputStream input = null;
-
-
-
-    }
-
-    @Before
-    public void logIn() {
-        Capabilities firefox = DesiredCapabilities.firefox();
-        driver = WebDriverPool.DEFAULT.getDriver(firefox);
-
-        driver.get(BASE_URL);
-
-        System.out.println(driver.getTitle());
-
-        try {
-            Thread.sleep(3000);
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
-
-        PageLogin pageLogin = new PageLogin(driver);
-
-        if (!driver.getCurrentUrl().contains(BASE_URL)) {
-            throw new IllegalStateException(
-                    "This is not the login page"
-            );
-        }
-
-        pageLogin.loginUser(USER_LOGIN, USER_PASSWORD);
-
-        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/dashboard")) {
-            System.out.println("Successful login did not result in redirect to Environment Dashboard"); //Sometimes exception sometimes println
-        }
+        logIn();
 
     }
 
@@ -114,11 +77,5 @@ public class TestCreateAndLaunchFarm extends BaseTestClass {
             );
         }
         */
-    }
-
-    @AfterClass
-    public static void closeBrowser(){
-
-        WebDriverPool.DEFAULT.dismissAll();
     }
 }

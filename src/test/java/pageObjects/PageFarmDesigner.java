@@ -106,7 +106,7 @@ public class PageFarmDesigner {
         PageFactory.initElements(driver, addFarmRoleControl);
         baseCategory.click();
 
-        try{
+        try {
             Thread.sleep(3000);
         }
 
@@ -145,7 +145,7 @@ public class PageFarmDesigner {
         PageFactory.initElements(driver, saveAndLaunch);
         saveAndLaunch.click();
 
-        try{
+        try {
             Thread.sleep(3000);
         }
         catch (Exception e) {
@@ -171,6 +171,5 @@ public class PageFarmDesigner {
             status = farmcreateFailureMessage.getText().contains("Incorrect login or password");
             return status;
         }
-
     }
 }
