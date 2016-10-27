@@ -15,13 +15,9 @@ import java.util.Properties;
 import org.junit.*;
 import ru.stqa.selenium.factory.WebDriverPool;
 
-public class TestCreateAndLaunchFarm extends Watchman {
+public class TestCreateAndLaunchFarm extends BaseTestClass {
 
-    private static WebDriver driver;
-    private static String BASE_URL = "";
-    private static String USER_LOGIN = "";
-    private static String USER_PASSWORD = "";
-    private static String USER_INCORRECT_PASSWORD = "";
+
     private String GENERATED_FARM_NAME = "";
 
     public TestCreateAndLaunchFarm() {
@@ -29,26 +25,8 @@ public class TestCreateAndLaunchFarm extends Watchman {
         Properties prop = new Properties();
         InputStream input = null;
 
-        try {
 
-            input = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/config.properties");
-            prop.load(input);
-            this.BASE_URL = prop.getProperty("BASE_URL");
-            this.USER_LOGIN = prop.getProperty("USER_LOGIN");
-            this.USER_PASSWORD = prop.getProperty("USER_PASSWORD");
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        System.setProperty("webdriver.gecko.driver", "/Library/geckodriver/geckodriver");
     }
 
     @Before
@@ -62,7 +40,8 @@ public class TestCreateAndLaunchFarm extends Watchman {
 
         try {
             Thread.sleep(3000);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
 
@@ -105,10 +84,9 @@ public class TestCreateAndLaunchFarm extends Watchman {
 
         pageFarms.startCreateFarm();
 
-        try{
+        try {
             Thread.sleep(3000);
         }
-
         catch (Exception e) {
             System.out.println(e);
         }

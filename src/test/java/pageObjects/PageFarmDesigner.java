@@ -96,10 +96,9 @@ public class PageFarmDesigner {
 
         addFarmRoleControl.click();
 
-        try{
+        try {
             Thread.sleep(3000);
         }
-
         catch (Exception e) {
             System.out.println(e);
         }
@@ -118,10 +117,9 @@ public class PageFarmDesigner {
         PageFactory.initElements(driver, selectRole);
         selectRole.click();
 
-        try{
+        try {
             Thread.sleep(3000);
         }
-
         catch (Exception e) {
             System.out.println(e);
         }
@@ -137,10 +135,9 @@ public class PageFarmDesigner {
         PageFactory.initElements(driver, addToFarm);
         addToFarm.click();
 
-        try{
+        try {
             Thread.sleep(2000);
         }
-
         catch (Exception e) {
             System.out.println(e);
         }
@@ -151,7 +148,6 @@ public class PageFarmDesigner {
         try{
             Thread.sleep(3000);
         }
-
         catch (Exception e) {
             System.out.println(e);
         }

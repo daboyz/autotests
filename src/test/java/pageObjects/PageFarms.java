@@ -53,10 +53,9 @@ public class PageFarms {
 
         newFarmButton.click();
 
-        try{
+        try {
             Thread.sleep(3000);
         }
-
         catch (Exception e) {
             System.out.println(e);
         }
@@ -79,10 +78,9 @@ public class PageFarms {
 
         driver.findElement(By.xpath("//div[text()='test-farm-" + farmName+ "']/../../..//div[@data-qtip='Terminate']")).click();
 
-        try{
+        try {
             Thread.sleep(1000);
         }
-
         catch (Exception e) {
             System.out.println(e);
         }

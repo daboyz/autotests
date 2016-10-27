@@ -51,10 +51,9 @@ public class PageLogin {
         loginButton.sendKeys(Keys.ENTER);
 
         PageFactory.initElements(driver, this);
-        try{
+        try {
             Thread.sleep(3000);
         }
-
         catch (Exception e) {
             System.out.println(e);
         }

@@ -1,13 +1,12 @@
 package testCases;
 
 import java.awt.Desktop;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -15,11 +14,63 @@ import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import ru.stqa.selenium.factory.WebDriverPool;
 
-public class Watchman {
+public class BaseTestClass {
 
     static File f;
     static BufferedWriter bw;
+
+    public WebDriver driver;
+    public String BASE_URL = "";
+    public String USER_LOGIN = "";
+    public String USER_PASSWORD = "";
+    public String USER_INCORRECT_PASSWORD = "";
+
+    public BaseTestClass() {
+
+        Properties prop = new Properties();
+        InputStream input = null;
+
+        try {
+
+            input = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/config.properties");
+            prop.load(input);
+            BASE_URL = prop.getProperty("BASE_URL");
+            USER_LOGIN = prop.getProperty("USER_LOGIN");
+            USER_PASSWORD = prop.getProperty("USER_PASSWORD");
+            USER_INCORRECT_PASSWORD = prop.getProperty("USER_INCORRECT_PASSWORD");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        System.setProperty("webdriver.gecko.driver", "/Library/geckodriver/geckodriver");
+
+        driver = WebDriverPool.DEFAULT.getDriver(DesiredCapabilities.firefox());
+        driver.manage().deleteAllCookies();
+        driver.get(BASE_URL);
+
+        System.out.println(driver.getTitle());
+
+        try {
+            Thread.sleep(3000);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
 
     @BeforeClass
     public static void setUp() throws IOException {

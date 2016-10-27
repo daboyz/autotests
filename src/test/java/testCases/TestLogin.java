@@ -11,61 +11,7 @@ import pageObjects.PageLogin;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.selenium.factory.WebDriverPool;
 
-public class TestLogin extends Watchman {
-
-    private WebDriver driver;
-    private String BASE_URL = "";
-    private String USER_LOGIN = "";
-    private String USER_PASSWORD = "";
-    private String USER_INCORRECT_PASSWORD = "";
-
-    public TestLogin() {
-
-        Properties prop = new Properties();
-        InputStream input = null;
-
-        try {
-
-            input = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/config.properties");
-            prop.load(input);
-            this.BASE_URL = prop.getProperty("BASE_URL");
-            this.USER_LOGIN = prop.getProperty("USER_LOGIN");
-            this.USER_PASSWORD = prop.getProperty("USER_PASSWORD");
-            this.USER_INCORRECT_PASSWORD = prop.getProperty("USER_INCORRECT_PASSWORD");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        System.setProperty("webdriver.gecko.driver", "/Library/geckodriver/geckodriver");
-    }
-
-    /**
-     * Test preparation (opening login page)
-     */
-    @Before
-    public void openLoginPage() {
-
-        driver = WebDriverPool.DEFAULT.getDriver(DesiredCapabilities.firefox());
-        driver.manage().deleteAllCookies();
-        driver.get(BASE_URL);
-
-        System.out.println(driver.getTitle());
-
-        try {
-            Thread.sleep(3000);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-    }
+public class TestLogin extends BaseTestClass {
 
     /**
      * Successful login test
