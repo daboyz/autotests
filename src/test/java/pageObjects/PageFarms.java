@@ -7,9 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class PageFarms {
-
-    private WebDriver driver;
+public class PageFarms extends BasePageClass {
 
     /**
      * New Farm button
@@ -39,11 +37,10 @@ public class PageFarms {
      * Farm launch success message
      */
     @FindBy(xpath = "//div[text()='Farm successfully saved and launched']")
-    private WebElement farmLaunchSuccessMessage;
+    public WebElement farmLaunchSuccessMessage;
 
     public PageFarms(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+        super(driver);
     }
 
     /**
@@ -66,8 +63,18 @@ public class PageFarms {
     /**
      * Launch Farm
      */
-    public void launchFarm(String FarmName) {
-        System.out.println(driver.getTitle());
+    public void launchFarm(String farmName) {
+
+        driver.findElement(By.xpath("//div[text()='test-farm-" + farmName+ "']/../../..//div[@data-qtip='Launch']")).click();
+
+        try {
+            Thread.sleep(1000);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
+        driver.findElement(By.xpath("(//span[text()='Launch'])[2]")).click();
 
     }
 
@@ -86,36 +93,6 @@ public class PageFarms {
         }
 
         driver.findElement(By.xpath("(//span[text()='Terminate'])[2]")).click();
-
-    }
-
-    /**
-     * Check for Farm launch confirmation
-     * */
-    public void checkForFarmLaunchConfirmation() {
-        PageFactory.initElements(driver, farmLaunchSuccessMessage);
-
-        Assert.assertTrue("Launch message should be present",
-                farmLaunchSuccessMessage.isDisplayed());
-    }
-
-    /**
-     * Check for error message
-     * @return {bool}
-     */
-    public boolean checkFarmLaunchErrorMessage() {
-        //boolean status;
-        Assert.assertTrue("Error message should be present",
-                farmLaunchError.isDisplayed());
-        boolean status = farmLaunchError.isDisplayed();
-        if (!status) return status;
-
-        else {
-            Assert.assertTrue("Error message should contain information about login or password error",
-                    farmLaunchError.getText().contains("Incorrect login or password"));
-            status = farmLaunchError.getText().contains("Incorrect login or password");
-            return status;
-        }
 
     }
 

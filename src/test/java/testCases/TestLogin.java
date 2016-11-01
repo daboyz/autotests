@@ -52,7 +52,7 @@ public class TestLogin extends BaseTestClass {
 
         pageLogin.loginUser(USER_LOGIN, USER_INCORRECT_PASSWORD);
 
-        if (!driver.getCurrentUrl().contains(BASE_URL) || !pageLogin.checkLoginErrorMessage()) {
+        if (!driver.getCurrentUrl().contains(BASE_URL) || !pageLogin.checkMessage(pageLogin.loginError, "Incorrect login or password")) {
             System.out.println("Login with incorrect password did not result in error message or redirected elsewhere");
         }
         //loginPage.checkErrorMessage(errorMessage);

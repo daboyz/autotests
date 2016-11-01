@@ -6,9 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class PageDashboard {
-
-    private WebDriver driver;
+public class PageDashboard extends BasePageClass {
 
     /**
      * Farms tab
@@ -23,8 +21,7 @@ public class PageDashboard {
     public WebElement navigationError;
 
     public PageDashboard(WebDriver driver) {
-         PageFactory.initElements(driver, this);
-         this.driver = driver;
+         super(driver);
     }
 
     /**
@@ -42,26 +39,6 @@ public class PageDashboard {
         }
 
         System.out.println(driver.getTitle());
-
-    }
-
-    /**
-     * Check for error message
-     * @return {bool}
-     */
-    public boolean checkNavErrorMessage() {
-        //boolean status;
-        Assert.assertTrue("Error message should be present",
-                navigationError.isDisplayed());
-        boolean status = navigationError.isDisplayed();
-        if (!status) return status;
-
-        else {
-            Assert.assertTrue("Error message should contain information about login or password error",
-                    navigationError.getText().contains("Incorrect login or password"));
-            status = navigationError.getText().contains("Incorrect login or password");
-            return status;
-        }
 
     }
 }

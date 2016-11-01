@@ -55,7 +55,7 @@ public class TestCreateAndLaunchFarm extends BaseTestClass {
         }
 
         if (!driver.getCurrentUrl().contains(BASE_URL + "/#/farms/designer")) {
-            System.out.println("Clicking New Farm did not result in opening Farm Designer"); //Sometimes exception sometimes println
+            System.out.println("Clicking New Farm did not result in opening Farm Designer"); //Sometimes exception sometimes info
         }
 
         PageFarmDesigner pageFarmDesigner =  new PageFarmDesigner(driver);
@@ -66,7 +66,7 @@ public class TestCreateAndLaunchFarm extends BaseTestClass {
 
         pageFarmDesigner.createAndLaunchNewTestFarm(GENERATED_FARM_NAME);
 
-        pageFarms.checkForFarmLaunchConfirmation();
+        pageFarms.checkMessage(pageFarms.farmLaunchSuccessMessage, "Farm successfully saved and launched");
 
         pageFarms.stopFarm(GENERATED_FARM_NAME);
 

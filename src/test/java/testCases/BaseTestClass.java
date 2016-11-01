@@ -1,6 +1,5 @@
 package testCases;
 
-import java.awt.Desktop;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,7 +14,6 @@ import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import pageObjects.PageLogin;
@@ -92,6 +90,12 @@ public class BaseTestClass {
         if (!driver.getCurrentUrl().contains(BASE_URL + "/#/dashboard")) {
             System.out.println("Successful login did not result in redirect to Environment Dashboard"); //Sometimes exception sometimes println
         }
+    }
+
+    public void checkMessageTest() {
+
+
+
     }
 
     @BeforeClass

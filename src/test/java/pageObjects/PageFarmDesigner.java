@@ -14,9 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PageFarmDesigner {
-
-    private WebDriver driver;
+public class PageFarmDesigner extends BasePageClass {
 
     /**
      * Farm Name Field
@@ -80,8 +78,7 @@ public class PageFarmDesigner {
     private WebElement farmcreateFailureMessage;
 
     public PageFarmDesigner(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+        super(driver);
     }
 
     /**
@@ -159,7 +156,7 @@ public class PageFarmDesigner {
      * @return {bool}
      */
     public boolean checkFarmLaunchErrorMessage() {
-        //boolean status;
+
         Assert.assertTrue("Error message should be present",
                 farmcreateFailureMessage.isDisplayed());
         boolean status = farmcreateFailureMessage.isDisplayed();

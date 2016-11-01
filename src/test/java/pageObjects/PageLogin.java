@@ -7,9 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class PageLogin {
-
-    private WebDriver driver;
+public class PageLogin extends BasePageClass{
 
     /**
      * Login field
@@ -34,11 +32,10 @@ public class PageLogin {
      * Error message
      */
     @FindBy(xpath = "//div[contains(., 'Incorrect login or password')]")
-    private WebElement loginError;
+    public WebElement loginError;
 
     public PageLogin(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+        super(driver);
     }
 
     /**
@@ -58,16 +55,16 @@ public class PageLogin {
             System.out.println(e);
         }
 
-        PageFactory.initElements(driver, loginError);
+        //PageFactory.initElements(driver, loginError);  //Why??
         System.out.println(driver.getTitle());
     }
 
     /**
      * Check for error message
      * @return {bool}
-     */
+     *
     public boolean checkLoginErrorMessage() {
-        //boolean status;
+
         Assert.assertTrue("Error message should be present",
                 loginError.isDisplayed());
         boolean status = loginError.isDisplayed();
@@ -80,5 +77,5 @@ public class PageLogin {
                 return status;
             }
 
-    }
+    }*/
 }
