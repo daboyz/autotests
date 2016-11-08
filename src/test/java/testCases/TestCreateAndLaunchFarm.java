@@ -1,49 +1,27 @@
 package testCases;
 
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Assert;
 import pageObjects.*;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Properties;
-import org.junit.*;
-import ru.stqa.selenium.factory.WebDriverPool;
+import org.testng.annotations.*;
 
 public class TestCreateAndLaunchFarm extends BaseTestClass {
 
     private String GENERATED_FARM_NAME = "";
+    private PageFarms pageFarms;
 
-    public TestCreateAndLaunchFarm() {
-        logIn();
-
-    }
-
-    /**
-     * Successful create and launch Farm test
-     */
-    @Test //(description = "Create and launch Farm successfully")
+    @Test (description = "Successfully create and launch Farm test")
     public void createAndLaunchFarmSuccess() {
 
+        super.authTests();
+
         PageDashboard pageDashboard =  new PageDashboard(driver);
+
         pageDashboard.switchToFarms();
 
-        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/farms")) {
-            System.out.println("Clicking Farms tab did not result in redirect to Farms page");
-        }
-
-        PageFarms pageFarms =  new PageFarms(driver);
-
-        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/farms")) {
-            throw new IllegalStateException(
-                    "This is not the Farms page"
-            );
-        }
+        pageFarms =  new PageFarms(driver);
 
         pageFarms.startCreateFarm();
 
@@ -54,10 +32,6 @@ public class TestCreateAndLaunchFarm extends BaseTestClass {
             System.out.println(e);
         }
 
-        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/farms/designer")) {
-            System.out.println("Clicking New Farm did not result in opening Farm Designer"); //Sometimes exception sometimes info
-        }
-
         PageFarmDesigner pageFarmDesigner =  new PageFarmDesigner(driver);
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
@@ -66,16 +40,9 @@ public class TestCreateAndLaunchFarm extends BaseTestClass {
 
         pageFarmDesigner.createAndLaunchNewTestFarm(GENERATED_FARM_NAME);
 
-        pageFarms.checkMessage(pageFarms.farmLaunchSuccessMessage, "Farm successfully saved and launched");
+        Assert.assertTrue(pageFarms.farmLaunchSuccessMessage.isDisplayed() && driver.getCurrentUrl().contains(BASE_URL + "/#/farms"));
 
         pageFarms.stopFarm(GENERATED_FARM_NAME);
-
-        /*
-        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/farms")) {
-            throw new IllegalStateException(
-                    "This is not the Farms page"
-            );
-        }
-        */
     }
+
 }

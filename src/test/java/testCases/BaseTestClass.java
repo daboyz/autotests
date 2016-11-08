@@ -5,32 +5,48 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
-
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.rules.TestRule;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import pageObjects.PageLogin;
+import org.testng.annotations.*;
+import pageObjects.*;
 import ru.stqa.selenium.factory.WebDriverPool;
 
 public class BaseTestClass {
 
     static File f;
-    static BufferedWriter bw;
+    public static BufferedWriter bw;
 
     public WebDriver driver;
-    public String BASE_URL = "";
-    public String USER_LOGIN = "";
-    public String USER_PASSWORD = "";
-    public String USER_INCORRECT_PASSWORD = "";
+    public static String BASE_URL = "";
+    public static String USER_LOGIN = "";
+    public static String USER_PASSWORD = "";
+    public static String USER_INCORRECT_PASSWORD = "";
 
-    public BaseTestClass() {
+    /**
+     * Service methods block
+     */
+    public void authTests() {
+
+        PageLogin pageLogin =  new PageLogin(driver);
+
+        pageLogin.loginUser(USER_LOGIN, USER_PASSWORD);
+
+        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/dashboard")) {
+            throw new IllegalStateException(
+                    "Login did not result in redirect to Environment Dashboard"
+            );
+        }
+    }
+
+    @BeforeClass
+    public static void setUp() throws IOException {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        Date date = new Date();
+
+        f = new File("test_results.htm");
+        bw = new BufferedWriter(new FileWriter(f, true));
+        bw.write("<html><body>");
+        bw.write("<h1>Test Case Status: " + dateFormat.format(date) + "</h1>");
 
         Properties prop = new Properties();
         InputStream input = null;
@@ -60,11 +76,13 @@ public class BaseTestClass {
 
         System.setProperty("webdriver.gecko.driver", "/Library/geckodriver/geckodriver");
 
+    }
+
+    @BeforeMethod
+    public void startBrowser(){
         driver = WebDriverPool.DEFAULT.getDriver(DesiredCapabilities.firefox());
         driver.manage().deleteAllCookies();
         driver.get(BASE_URL);
-
-        System.out.println(driver.getTitle());
 
         try {
             Thread.sleep(3000);
@@ -73,81 +91,25 @@ public class BaseTestClass {
             System.out.println(e);
         }
 
-    }
-
-    public void logIn() {
-
-        PageLogin pageLogin = new PageLogin(driver);
-
         if (!driver.getCurrentUrl().contains(BASE_URL)) {
             throw new IllegalStateException(
-                    "This is not the login page"
+                    "Login page did not load"
             );
         }
 
-        pageLogin.loginUser(USER_LOGIN, USER_PASSWORD);
+        System.out.println(driver.getTitle());
 
-        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/dashboard")) {
-            System.out.println("Successful login did not result in redirect to Environment Dashboard"); //Sometimes exception sometimes println
-        }
-    }
-
-    public void checkMessageTest() {
-
-
-
-    }
-
-    @BeforeClass
-    public static void setUp() throws IOException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-        Date date = new Date();
-
-        f = new File("test_results.htm");
-        bw = new BufferedWriter(new FileWriter(f, true));
-        bw.write("<html><body>");
-        bw.write("<h1>Test Case Status: " + dateFormat.format(date) + "</h1>");
     }
 
     /**
-     * Test finalization (close browser)
+     * Test finalization (close browser and logfile)
      */
     @AfterClass
-    public static void closeBrowser(){
+    public static void tearDown() throws IOException {
         WebDriverPool.DEFAULT.dismissAll();
-    }
 
-    @AfterClass
-    public static void tearDown() throws IOException
-    {
         bw.write("</body></html>");
         bw.close();
     }
 
-    @Rule public TestRule watchman = new TestWatcher() {
-
-        @Override public Statement apply(Statement base, Description description) {
-            return super.apply(base, description);
-        }
-
-        @Override protected void succeeded(Description description) {
-            try {
-                bw.write(description.getDisplayName() + " " + "passed");
-                bw.write("<br/>");
-            }
-            catch (Exception e1) {
-                System.out.println(e1.getMessage());
-            }
-        }
-
-        @Override protected void failed(Throwable e, Description description) {
-            try {
-                bw.write(description.getDisplayName() + " " + e.getClass().getSimpleName());
-                bw.write("<br/>");
-            }
-            catch (Exception e2) {
-                System.out.println(e2.getMessage());
-            }
-        }
-    };
 }

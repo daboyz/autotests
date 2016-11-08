@@ -1,6 +1,5 @@
 package pageObjects;
 
-import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -48,6 +47,7 @@ public class PageLogin extends BasePageClass{
         loginButton.sendKeys(Keys.ENTER);
 
         PageFactory.initElements(driver, this);
+
         try {
             Thread.sleep(3000);
         }
@@ -55,27 +55,7 @@ public class PageLogin extends BasePageClass{
             System.out.println(e);
         }
 
-        //PageFactory.initElements(driver, loginError);  //Why??
         System.out.println(driver.getTitle());
     }
 
-    /**
-     * Check for error message
-     * @return {bool}
-     *
-    public boolean checkLoginErrorMessage() {
-
-        Assert.assertTrue("Error message should be present",
-                loginError.isDisplayed());
-        boolean status = loginError.isDisplayed();
-        if (!status) return status;
-
-            else {
-                Assert.assertTrue("Error message should contain information about login or password error",
-                        loginError.getText().contains("Incorrect login or password"));
-                status = loginError.getText().contains("Incorrect login or password");
-                return status;
-            }
-
-    }*/
 }

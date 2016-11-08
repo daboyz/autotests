@@ -1,11 +1,9 @@
 package pageObjects;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class PageFarms extends BasePageClass {
 
@@ -65,7 +63,7 @@ public class PageFarms extends BasePageClass {
      */
     public void launchFarm(String farmName) {
 
-        driver.findElement(By.xpath("//div[text()='test-farm-" + farmName+ "']/../../..//div[@data-qtip='Launch']")).click();
+        driver.findElement(By.xpath("//div[text()='test-farm-" + farmName + "']/../../..//div[@data-qtip='Launch']")).click();
 
         try {
             Thread.sleep(1000);
@@ -83,7 +81,7 @@ public class PageFarms extends BasePageClass {
      */
     public void stopFarm(String farmName) {
 
-        driver.findElement(By.xpath("//div[text()='test-farm-" + farmName+ "']/../../..//div[@data-qtip='Terminate']")).click();
+        driver.findElement(By.xpath("//div[text()='test-farm-" + farmName + "']/../../..//div[@data-qtip='Terminate']")).click();
 
         try {
             Thread.sleep(1000);
@@ -95,5 +93,4 @@ public class PageFarms extends BasePageClass {
         driver.findElement(By.xpath("(//span[text()='Terminate'])[2]")).click();
 
     }
-
 }
