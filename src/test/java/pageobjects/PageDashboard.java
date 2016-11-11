@@ -1,9 +1,12 @@
-package pageObjects;
+package pageobjects;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+/**
+ * Dashboard Page
+ */
 public class PageDashboard extends BasePageClass {
 
     /**
@@ -12,15 +15,17 @@ public class PageDashboard extends BasePageClass {
     @FindBy(xpath = "//span[text()='Farms']")
     private WebElement farmsTab;
 
+    /**
+     * Super constructor
+     * */
     public PageDashboard(WebDriver driver) {
          super(driver);
     }
 
     /**
-     * Switch to Farms
+     * Switches to Farms
      */
     public void switchToFarms() {
-
         farmsTab.click();
 
         try {
@@ -31,6 +36,6 @@ public class PageDashboard extends BasePageClass {
         }
 
         System.out.println(driver.getTitle());
-
     }
+
 }

@@ -1,4 +1,4 @@
-package pageObjects;
+package pageobjects;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -28,20 +28,22 @@ public class PageLogin extends BasePageClass{
     private WebElement loginButton;
 
     /**
-     * Error message
+     * Login error message
      */
     @FindBy(xpath = "//div[contains(., 'Incorrect login or password')]")
     public WebElement loginError;
 
+    /**
+     * Super constructor
+     */
     public PageLogin(WebDriver driver) {
         super(driver);
     }
 
     /**
-     * User login
+     * Logs user in
      */
     public void loginUser(String LOGIN, String PASSWORD) {
-
         loginField.sendKeys(LOGIN);
         passwordField.sendKeys(PASSWORD);
         loginButton.sendKeys(Keys.ENTER);
@@ -52,7 +54,7 @@ public class PageLogin extends BasePageClass{
             Thread.sleep(3000);
         }
         catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         System.out.println(driver.getTitle());

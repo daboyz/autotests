@@ -1,4 +1,5 @@
-package testCases;
+package testcases;
+
 
 import java.io.*;
 import java.text.DateFormat;
@@ -7,37 +8,41 @@ import java.util.Date;
 import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.*;
-import pageObjects.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import pageobjects.PageLogin;
 import ru.stqa.selenium.factory.WebDriverPool;
 
+/**
+ * Base Test class
+ */
 public class BaseTestClass {
 
-    static File f;
-    public static BufferedWriter bw;
+    protected static File f;
+    protected static BufferedWriter bw;
+    protected static String baseUrl = "";
+    protected static String userLogin = "";
+    protected static String userPassword = "";
+    protected static String userIncorrectPassword = "";
 
-    public WebDriver driver;
-    public static String BASE_URL = "";
-    public static String USER_LOGIN = "";
-    public static String USER_PASSWORD = "";
-    public static String USER_INCORRECT_PASSWORD = "";
+    protected WebDriver driver;
 
     /**
-     * Service methods block
+     * Authenticates tests in the system
      */
     public void authTests() {
-
         PageLogin pageLogin =  new PageLogin(driver);
+        pageLogin.loginUser(userLogin, userPassword);
 
-        pageLogin.loginUser(USER_LOGIN, USER_PASSWORD);
-
-        if (!driver.getCurrentUrl().contains(BASE_URL + "/#/dashboard")) {
-            throw new IllegalStateException(
-                    "Login did not result in redirect to Environment Dashboard"
-            );
+        if (!driver.getCurrentUrl().contains(baseUrl + "/#/dashboard")) {
+            throw new IllegalStateException("Login did not result in redirect to Environment Dashboard");
         }
     }
 
+    /**
+     * Reads test parameters and sets Gecko driver property
+     */
     @BeforeClass
     public static void setUp() throws IOException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
@@ -54,55 +59,53 @@ public class BaseTestClass {
         try {
             input = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/config.properties");
             prop.load(input);
-            BASE_URL = prop.getProperty("BASE_URL");
-            USER_LOGIN = prop.getProperty("USER_LOGIN");
-            USER_PASSWORD = prop.getProperty("USER_PASSWORD");
-            USER_INCORRECT_PASSWORD = prop.getProperty("USER_INCORRECT_PASSWORD");
-
+            baseUrl = prop.getProperty("BASE_URL");
+            userLogin = prop.getProperty("USER_LOGIN");
+            userPassword = prop.getProperty("USER_PASSWORD");
+            userIncorrectPassword = prop.getProperty("USER_INCORRECT_PASSWORD");
         }
         catch (IOException ex) {
             ex.printStackTrace();
-
         }
         finally {
             if (input != null) {
                 try {
                     input.close();
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
 
         System.setProperty("webdriver.gecko.driver", "/Library/geckodriver/geckodriver");
-
     }
 
+    /**
+     * Gets WebDriver instance from WebDriver Factory and navigates to base url
+     */
     @BeforeMethod
     public void startBrowser(){
         driver = WebDriverPool.DEFAULT.getDriver(DesiredCapabilities.firefox());
         driver.manage().deleteAllCookies();
-        driver.get(BASE_URL);
+        driver.get(baseUrl);
 
         try {
             Thread.sleep(3000);
         }
         catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
-        if (!driver.getCurrentUrl().contains(BASE_URL)) {
-            throw new IllegalStateException(
-                    "Login page did not load"
-            );
+        if (!driver.getCurrentUrl().contains(baseUrl)) {
+            throw new IllegalStateException("Login page did not load");
         }
 
         System.out.println(driver.getTitle());
-
     }
 
     /**
-     * Test finalization (close browser and logfile)
+     * Closes browser and custom logfile
      */
     @AfterClass
     public static void tearDown() throws IOException {

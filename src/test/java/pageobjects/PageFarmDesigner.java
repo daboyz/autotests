@@ -1,4 +1,4 @@
-package pageObjects;
+package pageobjects;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -6,6 +6,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * Farm Designer Page
+ */
 public class PageFarmDesigner extends BasePageClass {
 
     /**
@@ -62,15 +65,17 @@ public class PageFarmDesigner extends BasePageClass {
     @FindBy(xpath = "//span[text()='Save & launch']")
     public WebElement saveAndLaunch;
 
+    /**
+     * Super constructor
+     */
     public PageFarmDesigner(WebDriver driver) {
         super(driver);
     }
 
     /**
-     * Create and launch a new farm
+     * Creates and launches a new farm
      */
     public void createAndLaunchNewTestFarm(String testFarmName) {
-
         fieldFarmName.sendKeys("test-farm-" + testFarmName);
 
         fieldProject.click();
@@ -82,7 +87,7 @@ public class PageFarmDesigner extends BasePageClass {
             Thread.sleep(3000);
         }
         catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         PageFactory.initElements(driver, addFarmRoleControl);
@@ -91,9 +96,8 @@ public class PageFarmDesigner extends BasePageClass {
         try {
             Thread.sleep(3000);
         }
-
         catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         PageFactory.initElements(driver, selectRole);
@@ -103,7 +107,7 @@ public class PageFarmDesigner extends BasePageClass {
             Thread.sleep(3000);
         }
         catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         PageFactory.initElements(driver, cloudAvailZoneCombo);
@@ -121,7 +125,7 @@ public class PageFarmDesigner extends BasePageClass {
             Thread.sleep(2000);
         }
         catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         PageFactory.initElements(driver, saveAndLaunch);
@@ -131,9 +135,10 @@ public class PageFarmDesigner extends BasePageClass {
             Thread.sleep(3000);
         }
         catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         System.out.println(driver.getTitle());
     }
+
 }
