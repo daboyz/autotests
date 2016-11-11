@@ -20,10 +20,15 @@ import ru.stqa.selenium.factory.WebDriverPool;
 public class BaseTestClass {
 
     protected static File f;
+
     protected static BufferedWriter bw;
+
     protected static String baseUrl = "";
+
     protected static String userLogin = "";
+
     protected static String userPassword = "";
+
     protected static String userIncorrectPassword = "";
 
     protected WebDriver driver;
