@@ -51,7 +51,7 @@ public class PageFarmDesigner extends BasePageClass {
      * EC2 us-east-1d avail zone
      */
     @FindBy(xpath = "//span[text()='us-east-1d']")
-    public WebElement cloudAvailZoneUseast1;
+    public WebElement cloudAvailZoneUseast1d;
 
     /**
      * Add role to farm button
@@ -75,7 +75,7 @@ public class PageFarmDesigner extends BasePageClass {
     /**
      * Creates and launches a new farm
      */
-    public void createAndLaunchNewTestFarm(String testFarmName) {
+    public void createAndLaunchNewEC2Farm(String testFarmName) {
         fieldFarmName.sendKeys("test-farm-" + testFarmName);
 
         fieldProject.click();
@@ -113,10 +113,10 @@ public class PageFarmDesigner extends BasePageClass {
         PageFactory.initElements(driver, cloudAvailZoneCombo);
         cloudAvailZoneCombo.click();
 
-        PageFactory.initElements(driver, cloudAvailZoneUseast1);
-        cloudAvailZoneUseast1.click();
+        PageFactory.initElements(driver, cloudAvailZoneUseast1d);
+        cloudAvailZoneUseast1d.click();
 
-        cloudAvailZoneCombo.click(); //Check if necessary
+        cloudAvailZoneCombo.click(); // WTF
 
         PageFactory.initElements(driver, addToFarm);
         addToFarm.click();

@@ -41,7 +41,7 @@ public class TestFarms extends BaseTestClass {
         Date date = new Date();
         String GENERATED_FARM_NAME = dateFormat.format(date);
 
-        pageFarmDesigner.createAndLaunchNewTestFarm(GENERATED_FARM_NAME);
+        pageFarmDesigner.createAndLaunchNewEC2Farm(GENERATED_FARM_NAME);
 
         Assert.assertTrue(pageFarms.farmLaunchSuccessMessage.isDisplayed() && driver.getCurrentUrl().contains(baseUrl + "/#/farms"));
 

@@ -1,6 +1,7 @@
 .DS_Store
 .idea/*
 target/*
+javadoc/*
 config.properties
 test_results.htm
 autotests.iml
