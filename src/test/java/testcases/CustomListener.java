@@ -2,7 +2,6 @@ package testcases;
 
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
-import org.testng.annotations.Test;
 
 /**
  * Custom TestNG test listener

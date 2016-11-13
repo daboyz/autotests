@@ -63,6 +63,7 @@ public abstract class BaseTestClass {
 
     /**
      * Initiates logging, sets date format for log and sets Gecko driver property
+     * @Throws IOException
      */
     @BeforeSuite
     public static void setUpSuite() throws IOException {
@@ -73,14 +74,11 @@ public abstract class BaseTestClass {
 
         try {
             Files.deleteIfExists(path);
-        }
-        catch (NoSuchFileException e) {
+        } catch (NoSuchFileException e) {
             System.err.format("%s: no such" + " file or directory%n", path);
-        }
-        catch (DirectoryNotEmptyException e) {
+        } catch (DirectoryNotEmptyException e) {
             System.err.format("%s not empty%n", path);
-        }
-        catch (IOException e) {     // File permission errors caught here
+        } catch (IOException e) {     // File permission errors caught here
             System.err.println(e);
         }
 
@@ -95,6 +93,7 @@ public abstract class BaseTestClass {
 
     /**
      * Sets date format back to non-spaced for generated names and writes class name to log
+     * @Throws IOException
      */
     @BeforeTest
     public void setUpTest() throws IOException {
@@ -105,6 +104,7 @@ public abstract class BaseTestClass {
 
     /**
      * Reads test parameters
+     * @Throws IOException
      */
     @BeforeClass
     public static void setUpClass() throws IOException {
@@ -152,6 +152,7 @@ public abstract class BaseTestClass {
 
     /**
      * Writes vertical space break between suites
+     * @Throws IOException
      */
     @AfterTest
     public static void tearDownTest() throws IOException {
@@ -160,6 +161,7 @@ public abstract class BaseTestClass {
 
     /**
      * Closes browser and custom logfile after test suite completion
+     * @Throws IOException
      */
     @AfterSuite
     public static void tearDownSuite() throws IOException {
