@@ -46,7 +46,7 @@ public class PageFarms extends BasePageClass {
      * Stops Farm by name
      */
     public void stopFarm(String farmName) {
-        driver.findElement(By.xpath("//div[text()='test-farm-" + farmName + "']/../../..//div[@data-qtip='Terminate']")).click();
+        driver.findElement(By.xpath("//div[text()='" + farmName + "']/../../..//div[@data-qtip='Terminate']")).click();
 
         waitForInvisibility(processingBar);
         popupTerminateFarmButton.click();

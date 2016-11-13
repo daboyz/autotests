@@ -2,6 +2,7 @@ package testcases;
 
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
+import org.testng.annotations.Test;
 
 /**
  * Custom TestNG test listener
@@ -15,7 +16,7 @@ public class CustomListener extends TestListenerAdapter {
     public void onTestSuccess(ITestResult tr) {
 
         try {
-            BaseTestClass.bw.write(tr.getName() + " passed.");
+            BaseTestClass.bw.write(tr.getMethod().getDescription() + " <font color = \"green\">passed</font>.");
             BaseTestClass.bw.write("<br/>");
         }
         catch (Exception e1) {
@@ -29,7 +30,7 @@ public class CustomListener extends TestListenerAdapter {
     @Override
     public void onTestFailure(ITestResult tr) {
         try {
-            BaseTestClass.bw.write(tr.getName() + " failed.");
+            BaseTestClass.bw.write(tr.getMethod().getDescription() + " <font color = \"red\">failed</font>.");
             BaseTestClass.bw.write("<br/>");
         }
         catch (Exception e2) {
@@ -43,7 +44,7 @@ public class CustomListener extends TestListenerAdapter {
     @Override
     public void onTestSkipped(ITestResult tr) {
         try {
-            BaseTestClass.bw.write(tr.getName() + " was skipped.");
+            BaseTestClass.bw.write(tr.getMethod().getDescription() + " <font color = \"orange\">was skipped</font>.");
             BaseTestClass.bw.write("<br/>");
         }
         catch (Exception e3) {

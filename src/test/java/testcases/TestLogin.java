@@ -18,6 +18,9 @@ public class TestLogin extends BaseTestClass {
         PageLogin pageLogin =  new PageLogin(driver);
         pageLogin.loginUser(userLogin, userPassword);
 
+        /**
+         * Verifies browser is redirected to Dashboard page
+         */
         Assert.assertTrue(driver.getCurrentUrl().contains(baseUrl + "/#/dashboard"));
     }
 
@@ -30,6 +33,9 @@ public class TestLogin extends BaseTestClass {
         PageLogin pageLogin =  new PageLogin(driver);
         pageLogin.loginUser(userLogin, userIncorrectPassword);
 
+        /**
+         * Verifies "Incorrect login or user" message appears and browser is not redirected to Dashboard page
+         */
         Assert.assertTrue(!driver.getCurrentUrl().contains(baseUrl + "/#/dashboard") && pageLogin.loginError.isDisplayed());
     }
 

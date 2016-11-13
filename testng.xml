@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Lifecycle tests">
+
+    <test name="Farm designer test">
+        <classes>
+            <class name="testcases.TestFarms" />
+        </classes>
+    </test>
+
+    <test name="Login page test">
+        <classes>
+            <class name="testcases.TestLogin" />
+        </classes>
+    </test>
+
+</suite>

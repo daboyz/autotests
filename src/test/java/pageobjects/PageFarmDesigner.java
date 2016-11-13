@@ -93,7 +93,7 @@ public class PageFarmDesigner extends BasePageClass {
      * Creates and launches a new farm
      */
     public void setupAndLaunchNewEC2Farm(String testFarmName) {
-        fieldFarmName.sendKeys("test-farm-" + testFarmName);
+        fieldFarmName.sendKeys(testFarmName);
 
         fieldProject.click();
         fieldProject.sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
@@ -120,7 +120,7 @@ public class PageFarmDesigner extends BasePageClass {
         saveAndLaunch.click();
 
         waitForInvisibility(savingFarmBar);
-        System.out.println(driver.getTitle());
+        System.out.println(driver.getTitle());      //Navigation breadcrumb
     }
 
 }

@@ -19,6 +19,12 @@ public abstract class BasePageClass {
     protected WebDriver driver;
 
     /**
+     * Loading Scalr bar
+     */
+    @FindBy(xpath = "//div[@id='loading-bg']")
+    protected WebElement loadingBg;
+
+    /**
      * Processing progress bar
      */
     @FindBy(xpath = "//div[text()='Processing ...']")
@@ -55,7 +61,7 @@ public abstract class BasePageClass {
                 break;
         }
 
-        System.out.println(driver.getTitle());  //Navigation breadcrumb
+        System.out.println(driver.getTitle());      //Navigation breadcrumb
     }
 
     /**
@@ -74,10 +80,10 @@ public abstract class BasePageClass {
     public void waitForInvisibility(WebElement el) {
         String st = getElementXPath(el);
 
-        WebDriverWait waitToAppear = new WebDriverWait(driver, 5);
+        WebDriverWait waitToAppear = new WebDriverWait(driver, 10);
         waitToAppear.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(st)));
 
-        WebDriverWait waitToDisappear = new WebDriverWait(driver, 10);
+        WebDriverWait waitToDisappear = new WebDriverWait(driver, 20);
         waitToDisappear.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(st)));
     }
 
@@ -87,7 +93,7 @@ public abstract class BasePageClass {
     public void waitForVisibility(WebElement el) {
         String st = getElementXPath(el);
 
-        WebDriverWait waitToAppear = new WebDriverWait(driver, 10);
+        WebDriverWait waitToAppear = new WebDriverWait(driver, 20);
         waitToAppear.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(st)));
     }
 

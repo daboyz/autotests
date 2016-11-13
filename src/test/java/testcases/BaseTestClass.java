@@ -6,16 +6,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileInputStream;
+import java.nio.file.Path;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.NoSuchFileException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 import pageobjects.PageLogin;
 import ru.stqa.selenium.factory.WebDriverPool;
 
@@ -38,6 +40,10 @@ public abstract class BaseTestClass {
 
     protected WebDriver driver;
 
+    protected static DateFormat dateFormat;
+
+    protected static Date date;
+
     /**
      * Authenticates tests in the system
      */
@@ -51,18 +57,49 @@ public abstract class BaseTestClass {
     }
 
     /**
-     * Reads test parameters and sets Gecko driver property
+     * Initiates logging, sets date format and sets Gecko driver property
      */
-    @BeforeClass
-    public static void setUp() throws IOException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-        Date date = new Date();
+    @BeforeSuite
+    public static void setUpSuite() throws IOException {
+        dateFormat = new SimpleDateFormat("dd MMM yyyy   HH:mm:ss");
+        date = new Date();
+
+        Path path = FileSystems.getDefault().getPath("test_results.htm");
+
+        try {
+            Files.deleteIfExists(path);
+        } catch (NoSuchFileException e) {
+            System.err.format("%s: no such" + " file or directory%n", path);
+        } catch (DirectoryNotEmptyException e) {
+            System.err.format("%s not empty%n", path);
+        } catch (IOException e) {
+            // File permission problems are caught here.
+            System.err.println(e);
+        }
 
         f = new File("test_results.htm");
         bw = new BufferedWriter(new FileWriter(f, true));
-        bw.write("<html><body>");
-        bw.write("<h1>Test Case Status: " + dateFormat.format(date) + "</h1>");
 
+        bw.write("<html><body>");
+        bw.write("<h1>Test suite run results on " + dateFormat.format(date) + "</h1>");
+
+        System.setProperty("webdriver.gecko.driver", "/Library/geckodriver/geckodriver");
+    }
+
+    /**
+     * Sets date format back to non-spaced for generated names
+     */
+    @BeforeTest
+    public void setUpTest() throws IOException {
+        dateFormat = new SimpleDateFormat("dd-MM-yy-HH-mm-ss");
+        bw.write("<h2>Test class " + this.getClass().getName() + "</h2>");
+    }
+
+    /**
+     * Reads test parameters
+     */
+    @BeforeClass
+    public static void setUpClass() throws IOException {
         Properties prop = new Properties();
         InputStream input = null;
 
@@ -87,8 +124,6 @@ public abstract class BaseTestClass {
                 }
             }
         }
-
-        System.setProperty("webdriver.gecko.driver", "/Library/geckodriver/geckodriver");
     }
 
     /**
@@ -100,13 +135,6 @@ public abstract class BaseTestClass {
         driver.manage().deleteAllCookies();
         driver.get(baseUrl);
 
-        try {
-            Thread.sleep(3000);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
         if (!driver.getCurrentUrl().contains(baseUrl)) {
             throw new IllegalStateException("Login page did not load");
         }
@@ -115,10 +143,18 @@ public abstract class BaseTestClass {
     }
 
     /**
+     * Writes vertical space break between suites
+     */
+    @AfterTest
+    public static void tearDownTest() throws IOException {
+        bw.write("<br/>");
+    }
+
+    /**
      * Closes browser and custom logfile
      */
-    @AfterClass
-    public static void tearDown() throws IOException {
+    @AfterSuite
+    public static void tearDownSuite() throws IOException {
         WebDriverPool.DEFAULT.dismissAll();
 
         bw.write("</body></html>");
