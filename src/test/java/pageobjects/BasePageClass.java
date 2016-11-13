@@ -44,22 +44,22 @@ public abstract class BasePageClass {
 
         PageFactory.initElements(driver, this);
 
-        //WebElement el = driver.findElement(By.xpath(st));
-        waitForElementToBeInvisible(loadingPageBar);
-        System.out.println(driver.getTitle());
+        /**
+         * Waits for provided element to disappear, no wait if nothing matched
+         */
+        switch (st) {
+            case "loadingPageBar":
+                waitForInvisibility(loadingPageBar);
+                break;
+            default:
+                break;
+        }
+
+        System.out.println(driver.getTitle());  //Navigation breadcrumb
     }
 
     /**
-     * Constructor with WebElements and local driver field initialization
-     */
-    public BasePageClass(WebDriver driver) {
-        this.driver = driver;
-
-        PageFactory.initElements(driver, this);
-    }
-
-    /**
-     * Gets WebElement XPath
+     * Returns WebElement XPath as String
      * @return String
      */
     public String getElementXPath(WebElement el) {
@@ -69,9 +69,9 @@ public abstract class BasePageClass {
     }
 
     /**
-     * Waits until element is invisible
+     * Holds test until element is invisible
      */
-    public void waitForElementToBeInvisible(WebElement el) {
+    public void waitForInvisibility(WebElement el) {
         String st = getElementXPath(el);
 
         WebDriverWait waitToAppear = new WebDriverWait(driver, 5);
@@ -82,9 +82,9 @@ public abstract class BasePageClass {
     }
 
     /**
-     * Waits until element is visible
+     * Holds test until element is visible
      */
-    public void waitForElementToBeVisible(WebElement el) {
+    public void waitForVisibility(WebElement el) {
         String st = getElementXPath(el);
 
         WebDriverWait waitToAppear = new WebDriverWait(driver, 10);

@@ -35,7 +35,7 @@ public class PageLogin extends BasePageClass{
      * Super constructor
      */
     public PageLogin(WebDriver driver) {
-        super(driver);
+        super(driver, "");
     }
 
     /**
@@ -46,7 +46,7 @@ public class PageLogin extends BasePageClass{
         passwordField.sendKeys(PASSWORD);
         loginButton.sendKeys(Keys.ENTER);
 
-        waitForElementToBeInvisible(processingBar);
+        waitForInvisibility(processingBar);
     }
 
 }

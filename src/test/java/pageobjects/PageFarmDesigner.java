@@ -97,16 +97,16 @@ public class PageFarmDesigner extends BasePageClass {
 
         fieldProject.click();
         fieldProject.sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
-/*
+
         addFarmRoleControl.click();
 
-        waitForElementToBeInvisible(loadingBar);
+        waitForInvisibility(loadingBar);
         baseCategory.click();
 
-        waitForElementToBeInvisible(loadingBar);
+        waitForInvisibility(loadingBar);
         selectRole.click();
 
-        waitForElementToBeInvisible(loadingBar);
+        waitForInvisibility(loadingBar);
         cloudAvailZoneCombo.click();
 
         cloudAvailZoneUseast1d.click();
@@ -114,12 +114,12 @@ public class PageFarmDesigner extends BasePageClass {
         cloudAvailZoneCombo.click(); // Close dropdown
 
         addToFarm.click();
-        waitForElementToBeInvisible(loadingBar);
-*/
-        //waitForElementToBeVisible(bannerRoleAdded);
+        waitForInvisibility(loadingBar);
+
+        waitForVisibility(bannerRoleAdded);
         saveAndLaunch.click();
 
-        waitForElementToBeInvisible(savingFarmBar);
+        waitForInvisibility(savingFarmBar);
         System.out.println(driver.getTitle());
     }
 
