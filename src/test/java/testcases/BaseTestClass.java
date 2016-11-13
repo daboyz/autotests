@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
@@ -17,7 +18,7 @@ import ru.stqa.selenium.factory.WebDriverPool;
 /**
  * Base Test class
  */
-public class BaseTestClass {
+public abstract class BaseTestClass {
 
     protected static File f;
 

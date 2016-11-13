@@ -23,42 +23,23 @@ public class PageFarms extends BasePageClass {
     public WebElement farmLaunchSuccessMessage;
 
     /**
+     * Popup Terminate Farm Button
+     */
+    @FindBy(xpath = "(//span[text()='Terminate'])[2]")
+    private WebElement popupTerminateFarmButton;
+
+    /**
      * Super constructor
      */
     public PageFarms(WebDriver driver) {
-        super(driver);
+        super(driver, "loadingPageBar");
     }
 
     /**
-     * Opens Farm Designer for a new farm creation
+     * Starts Farm Designer for a new farm creation
      */
     public void startCreateFarm() {
         newFarmButton.click();
-
-        try {
-            Thread.sleep(3000);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(driver.getTitle());
-    }
-
-    /**
-     * Launches Farm by name
-     */
-    public void launchFarm(String farmName) {
-        driver.findElement(By.xpath("//div[text()='test-farm-" + farmName + "']/../../..//div[@data-qtip='Launch']")).click();
-
-        try {
-            Thread.sleep(1000);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        driver.findElement(By.xpath("(//span[text()='Launch'])[2]")).click();
     }
 
     /**
@@ -67,14 +48,8 @@ public class PageFarms extends BasePageClass {
     public void stopFarm(String farmName) {
         driver.findElement(By.xpath("//div[text()='test-farm-" + farmName + "']/../../..//div[@data-qtip='Terminate']")).click();
 
-        try {
-            Thread.sleep(1000);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        driver.findElement(By.xpath("(//span[text()='Terminate'])[2]")).click();
+        waitForElementToBeInvisible(processingBar);
+        popupTerminateFarmButton.click();
     }
 
 }

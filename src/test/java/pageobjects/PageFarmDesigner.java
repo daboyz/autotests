@@ -2,7 +2,6 @@ package pageobjects;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -12,15 +11,21 @@ import org.openqa.selenium.WebElement;
 public class PageFarmDesigner extends BasePageClass {
 
     /**
+     * Saving Farm bar
+     */
+    @FindBy(xpath = "//div[text()='Saving farm ...']")
+    private WebElement savingFarmBar;
+
+    /**
      * Farm Name Field
      */
-    @FindBy(xpath = "//input[contains(@class,'x-form-field x-form-text x-form-text-default') and @name='name']")
+    @FindBy(xpath = "(//input[@name='name'])[2]")
     private WebElement fieldFarmName;
 
     /**
      * Project field
      * */
-    @FindBy(xpath = "(//span[text()='Project']/../..//input[@name='projectId'])[2]")
+    @FindBy(xpath = "(//input[@name='projectId'])[2]")
     private WebElement fieldProject;
 
     /**
@@ -36,7 +41,7 @@ public class PageFarmDesigner extends BasePageClass {
     private WebElement baseCategory;
 
     /**
-     * Select base-ubuntu1404 role
+     * Base-ubuntu1404 role
      */
     @FindBy(xpath = "//span[text()='base-ubuntu1404']")
     public WebElement selectRole;
@@ -60,84 +65,61 @@ public class PageFarmDesigner extends BasePageClass {
     public WebElement addToFarm;
 
     /**
+     * Farm role tab
+     */
+    @FindBy(xpath = "//div[@title='base-ubuntu1404']")
+    public WebElement farmRoleTab;
+
+    /**
      * Save and launch farm button
      */
     @FindBy(xpath = "//span[text()='Save & launch']")
     public WebElement saveAndLaunch;
 
     /**
+     * Role added successfully banner
+     */
+    @FindBy(xpath = "//div[text()='Role \"base-ubuntu1404\" added']")
+    private WebElement bannerRoleAdded;
+
+    /**
      * Super constructor
      */
     public PageFarmDesigner(WebDriver driver) {
-        super(driver);
+        super(driver, "loadingPageBar");
     }
 
     /**
      * Creates and launches a new farm
      */
-    public void createAndLaunchNewEC2Farm(String testFarmName) {
+    public void setupAndLaunchNewEC2Farm(String testFarmName) {
         fieldFarmName.sendKeys("test-farm-" + testFarmName);
 
         fieldProject.click();
         fieldProject.sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
-
+/*
         addFarmRoleControl.click();
 
-        try {
-            Thread.sleep(3000);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        PageFactory.initElements(driver, addFarmRoleControl);
+        waitForElementToBeInvisible(loadingBar);
         baseCategory.click();
 
-        try {
-            Thread.sleep(3000);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        PageFactory.initElements(driver, selectRole);
+        waitForElementToBeInvisible(loadingBar);
         selectRole.click();
 
-        try {
-            Thread.sleep(3000);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        PageFactory.initElements(driver, cloudAvailZoneCombo);
+        waitForElementToBeInvisible(loadingBar);
         cloudAvailZoneCombo.click();
 
-        PageFactory.initElements(driver, cloudAvailZoneUseast1d);
         cloudAvailZoneUseast1d.click();
 
-        cloudAvailZoneCombo.click(); // WTF
+        cloudAvailZoneCombo.click(); // Close dropdown
 
-        PageFactory.initElements(driver, addToFarm);
         addToFarm.click();
-
-        try {
-            Thread.sleep(2000);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        PageFactory.initElements(driver, saveAndLaunch);
+        waitForElementToBeInvisible(loadingBar);
+*/
+        //waitForElementToBeVisible(bannerRoleAdded);
         saveAndLaunch.click();
 
-        try {
-            Thread.sleep(3000);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        waitForElementToBeInvisible(savingFarmBar);
         System.out.println(driver.getTitle());
     }
 

@@ -19,7 +19,7 @@ public class PageDashboard extends BasePageClass {
      * Super constructor
      * */
     public PageDashboard(WebDriver driver) {
-         super(driver);
+        super(driver, "loadingPageBar");
     }
 
     /**
@@ -27,15 +27,6 @@ public class PageDashboard extends BasePageClass {
      */
     public void switchToFarms() {
         farmsTab.click();
-
-        try {
-            Thread.sleep(3000);
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
-
-        System.out.println(driver.getTitle());
     }
 
 }

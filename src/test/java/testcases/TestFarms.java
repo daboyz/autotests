@@ -4,7 +4,6 @@ import org.testng.Assert;
 import pageobjects.PageDashboard;
 import pageobjects.PageFarmDesigner;
 import pageobjects.PageFarms;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.testng.annotations.Test;
@@ -18,8 +17,7 @@ public class TestFarms extends BaseTestClass {
      * Creates Farm with Ubuntu 1404 base role, cleans up after confirmation
      */
     @Test (description = "Create and launch EC2 Farm test")
-    public void createAndLaunchFarmSuccess() {
-
+    public void createAndLaunchEC2FarmSuccess() {
         super.authTests();
 
         PageDashboard pageDashboard =  new PageDashboard(driver);
@@ -28,24 +26,13 @@ public class TestFarms extends BaseTestClass {
         PageFarms pageFarms =  new PageFarms(driver);
         pageFarms.startCreateFarm();
 
-        try {
-            Thread.sleep(3000);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
         PageFarmDesigner pageFarmDesigner =  new PageFarmDesigner(driver);
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        Date date = new Date();
-        String GENERATED_FARM_NAME = dateFormat.format(date);
-
-        pageFarmDesigner.createAndLaunchNewEC2Farm(GENERATED_FARM_NAME);
+        String generatedFarmName = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
+        pageFarmDesigner.setupAndLaunchNewEC2Farm(generatedFarmName);
 
         Assert.assertTrue(pageFarms.farmLaunchSuccessMessage.isDisplayed() && driver.getCurrentUrl().contains(baseUrl + "/#/farms"));
 
-        pageFarms.stopFarm(GENERATED_FARM_NAME);
+        pageFarms.stopFarm(generatedFarmName);
     }
 
 }

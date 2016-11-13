@@ -4,7 +4,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class PageLogin extends BasePageClass{
 
@@ -19,7 +18,6 @@ public class PageLogin extends BasePageClass{
      */
     @FindBy(xpath = "//input[@name='scalrPass']")
     private WebElement passwordField;
-
 
     /**
      * Login button
@@ -48,16 +46,7 @@ public class PageLogin extends BasePageClass{
         passwordField.sendKeys(PASSWORD);
         loginButton.sendKeys(Keys.ENTER);
 
-        PageFactory.initElements(driver, this);
-
-        try {
-            Thread.sleep(3000);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(driver.getTitle());
+        waitForElementToBeInvisible(processingBar);
     }
 
 }
