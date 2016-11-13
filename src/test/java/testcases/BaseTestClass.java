@@ -17,7 +17,12 @@ import java.util.Date;
 import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import pageobjects.PageLogin;
 import ru.stqa.selenium.factory.WebDriverPool;
 
@@ -57,23 +62,25 @@ public abstract class BaseTestClass {
     }
 
     /**
-     * Initiates logging, sets date format and sets Gecko driver property
+     * Initiates logging, sets date format for log and sets Gecko driver property
      */
     @BeforeSuite
     public static void setUpSuite() throws IOException {
-        dateFormat = new SimpleDateFormat("dd MMM yyyy   HH:mm:ss");
+        dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
         date = new Date();
 
         Path path = FileSystems.getDefault().getPath("test_results.htm");
 
         try {
             Files.deleteIfExists(path);
-        } catch (NoSuchFileException e) {
+        }
+        catch (NoSuchFileException e) {
             System.err.format("%s: no such" + " file or directory%n", path);
-        } catch (DirectoryNotEmptyException e) {
+        }
+        catch (DirectoryNotEmptyException e) {
             System.err.format("%s not empty%n", path);
-        } catch (IOException e) {
-            // File permission problems are caught here.
+        }
+        catch (IOException e) {     // File permission errors caught here
             System.err.println(e);
         }
 
@@ -87,12 +94,13 @@ public abstract class BaseTestClass {
     }
 
     /**
-     * Sets date format back to non-spaced for generated names
+     * Sets date format back to non-spaced for generated names and writes class name to log
      */
     @BeforeTest
     public void setUpTest() throws IOException {
         dateFormat = new SimpleDateFormat("dd-MM-yy-HH-mm-ss");
-        bw.write("<h2>Test class " + this.getClass().getName() + "</h2>");
+
+        bw.write("<h2>Test class " + this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".") + 1) + "</h2>");
     }
 
     /**
@@ -127,10 +135,10 @@ public abstract class BaseTestClass {
     }
 
     /**
-     * Gets WebDriver instance from WebDriver Factory and navigates to base url
+     * Gets WebDriver instance from WebDriver Factory, clears cookies and navigates to base url
      */
     @BeforeMethod
-    public void startBrowser(){
+    public void setUpMethod(){
         driver = WebDriverPool.DEFAULT.getDriver(DesiredCapabilities.firefox());
         driver.manage().deleteAllCookies();
         driver.get(baseUrl);
@@ -139,7 +147,7 @@ public abstract class BaseTestClass {
             throw new IllegalStateException("Login page did not load");
         }
 
-        System.out.println(driver.getTitle());
+        System.out.println(driver.getTitle());      //Navigation breadcrumb
     }
 
     /**
@@ -151,7 +159,7 @@ public abstract class BaseTestClass {
     }
 
     /**
-     * Closes browser and custom logfile
+     * Closes browser and custom logfile after test suite completion
      */
     @AfterSuite
     public static void tearDownSuite() throws IOException {
