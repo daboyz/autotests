@@ -11,6 +11,12 @@ import org.openqa.selenium.WebElement;
 public class PageFarmDesigner extends BasePageClass {
 
     /**
+     * Loading Farm progress bar
+     */
+    @FindBy(xpath = "//div[text()='Loading farm...']")
+    protected WebElement loadingFarmBar;
+
+    /**
      * Saving Farm bar
      */
     @FindBy(xpath = "//div[text()='Saving farm ...']")
@@ -97,7 +103,7 @@ public class PageFarmDesigner extends BasePageClass {
 
         fieldProject.click();
         fieldProject.sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
-
+/*
         addFarmRoleControl.click();
 
         waitForInvisibility(loadingBar);
@@ -116,7 +122,7 @@ public class PageFarmDesigner extends BasePageClass {
         addToFarm.click();
         waitForInvisibility(loadingBar);
 
-        waitForVisibility(bannerRoleAdded);
+        waitForVisibility(bannerRoleAdded);*/
         saveAndLaunch.click();
 
         waitForInvisibility(savingFarmBar);

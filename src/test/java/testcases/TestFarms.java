@@ -30,7 +30,7 @@ public class TestFarms extends BaseTestClass {
         pageFarmDesigner.setupAndLaunchNewEC2Farm(generatedFarmName);
 
         /**
-         * Verifies "Farm saved and ;aunched successfully" message appears and browser is redirected to Farms page
+         * Verifies "Farm saved and launched successfully" message appears and browser is redirected to Farms page
          */
         Assert.assertTrue(pageFarms.farmLaunchSuccessMessage.isDisplayed() && driver.getCurrentUrl().contains(baseUrl + "/#/farms"));
 

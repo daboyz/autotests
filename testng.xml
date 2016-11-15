@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Lifecycle tests">
+<suite name="Lifecycle tests" parallel="false" thread-count="2">
 
-    <test name="Farm designer test">
+    <test name="Lifecycle test run on Firefox">
+
+        <parameter name="browser" value="firefox" />
+
         <classes>
             <class name="testcases.TestFarms" />
+            <class name="testcases.TestLogin" />
         </classes>
     </test>
 
-    <test name="Login page test">
+    <test name="Lifecycle test run on Chrome">
+
+        <parameter name="browser" value="chrome" />
+
         <classes>
+            <class name="testcases.TestFarms" />
             <class name="testcases.TestLogin" />
         </classes>
     </test>

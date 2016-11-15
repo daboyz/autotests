@@ -45,12 +45,12 @@ public class PageLogin extends BasePageClass{
     /**
      * Logs user in
      */
-    public void loginUser(String LOGIN, String PASSWORD) {
+    public void loginUser(String login, String password) {
         waitForInvisibility(loadingBg);
 
-        loginField.sendKeys(LOGIN);
-        passwordField.sendKeys(PASSWORD);
-        loginButton.sendKeys(Keys.ENTER);
+        loginField.sendKeys(login);
+        passwordField.sendKeys(password);
+        loginButton.click();
 
         waitForInvisibility(processingBar);
     }
