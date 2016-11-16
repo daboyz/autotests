@@ -9,8 +9,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static testcases.BaseTestClass.f;
-
 /**
  * Custom TestNG test listener
  */
@@ -28,7 +26,7 @@ public class CustomListener extends TestListenerAdapter {
         date = new Date();
 
         try {
-            bw = new BufferedWriter(new FileWriter(f, true));
+            bw = new BufferedWriter(new FileWriter(BaseTestClass.f, true));
             bw.write("<html><head>\n<style>\ntable,th,td{\n border:1px solid black; padding: 8px;\n}\n</style></head><body>");
             bw.write("<table style=\"width:70%\"> <tr> <th colspan=\"2\">" + testContext.getName() + " run results on " + dateFormat.format(date) + "</th> </tr> <tr> <th>Tests</th> <th>Status</th> </tr>");
         } catch (Exception e1) {
