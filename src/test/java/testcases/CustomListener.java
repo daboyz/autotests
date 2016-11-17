@@ -53,8 +53,7 @@ public class CustomListener extends TestListenerAdapter {
     public void onTestFailure(ITestResult tr) {
         try {
             bw.write("<td>" + tr.getMethod().getDescription() + "</td> <td><font color = \"red\">Failed</font ></td> </tr>");
-        }
-        catch (Exception e2) {
+        } catch (Exception e2) {
             System.out.println(e2.getMessage());
         }
     }

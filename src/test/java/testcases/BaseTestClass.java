@@ -89,8 +89,7 @@ public abstract class BaseTestClass {
             marionetteDir = prop.getProperty("MARIONETTE_DIR");
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (input != null) {
                 try {
                     input.close();
