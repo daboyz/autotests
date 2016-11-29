@@ -66,8 +66,7 @@ public class CustomListener extends TestListenerAdapter {
     public void onTestSkipped(ITestResult tr) {
         try {
             bw.write("<td>" + tr.getMethod().getDescription() + "</td> <td><font color = \"orange\">Skipped</font> </td> </tr>");
-        }
-        catch (Exception e3) {
+        } catch (Exception e3) {
             System.out.println(e3.getMessage());
         }
     }
