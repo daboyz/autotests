@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 /**
  * Dashboard Page
  */
-public class PageDashboard extends BasePageClass {
+public class PageDashboard extends BasePage {
 
     /**
      * Farms tab

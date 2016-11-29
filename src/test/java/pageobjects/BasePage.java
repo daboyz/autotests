@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 /**
  * Base Page class
  */
-public abstract class BasePageClass {
+public abstract class BasePage {
 
     /**
      * Operation WebDriver
@@ -45,7 +45,7 @@ public abstract class BasePageClass {
     /**
      * Constructor with WebElements, local driver field initialization and page load wait
      */
-    public BasePageClass(WebDriver driver, String st) {
+    public BasePage(WebDriver driver, String st) {
         this.driver = driver;
 
         PageFactory.initElements(driver, this);

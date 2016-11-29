@@ -8,8 +8,10 @@
         <parameter name="browser" value="firefox" />
 
         <classes>
-            <class name="testcases.TestFarms" />
-            <class name="testcases.TestLogin" />
+            <class name="testcases.CreateAndLaunchEC2FarmSuccess" />
+            <class name="testcases.StopFarmSuccess" />
+            <class name="testcases.LoginUserSuccess" />
+            <class name="testcases.LoginUserFailure" />
         </classes>
     </test>
 
@@ -18,8 +20,10 @@
         <parameter name="browser" value="chrome" />
 
         <classes>
-            <class name="testcases.TestFarms" />
-            <class name="testcases.TestLogin" />
+            <class name="testcases.CreateAndLaunchEC2FarmSuccess" />
+            <class name="testcases.StopFarmSuccess" />
+            <class name="testcases.LoginUserSuccess" />
+            <class name="testcases.LoginUserFailure" />
         </classes>
     </test>
 

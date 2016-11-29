@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 /**
  * Farm Designer Page
  */
-public class PageFarmDesigner extends BasePageClass {
+public class PageFarmDesigner extends BasePage {
 
     /**
      * Loading Farm progress bar
@@ -103,8 +103,8 @@ public class PageFarmDesigner extends BasePageClass {
 
         fieldProject.click();
         fieldProject.sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
-/*
-        addFarmRoleControl.click();
+
+        /*addFarmRoleControl.click();
 
         waitForInvisibility(loadingBar);
         baseCategory.click();
@@ -122,7 +122,7 @@ public class PageFarmDesigner extends BasePageClass {
         addToFarm.click();
         waitForInvisibility(loadingBar);
 
-        waitForVisibility(bannerRoleAdded);*/
+        waitForVisibility(bannerRoleAdded); */
         saveAndLaunch.click();
 
         waitForInvisibility(savingFarmBar);

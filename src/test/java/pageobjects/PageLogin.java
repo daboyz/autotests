@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 /**
  * Login page
  */
-public class PageLogin extends BasePageClass{
+public class PageLogin extends BasePage {
 
     /**
      * Login field

@@ -26,7 +26,7 @@ import ru.stqa.selenium.factory.WebDriverPool;
 /**
  * Base Test class
  */
-public abstract class BaseTestClass {
+public abstract class BaseTest {
 
     protected static String baseUrl = "";
 
@@ -38,7 +38,7 @@ public abstract class BaseTestClass {
 
     protected static String marionetteDir = "";
 
-    protected static WebDriver driver;      // Static?
+    protected static WebDriver driver;
 
     protected DateFormat dateFormat;
 
@@ -156,7 +156,7 @@ public abstract class BaseTestClass {
      */
     @AfterSuite
     public static void tearDownSuite() {
-        WebDriverPool.DEFAULT.dismissAll();     // TODO Dismiss all?
+        WebDriverPool.DEFAULT.dismissAll();
     }
 
 }

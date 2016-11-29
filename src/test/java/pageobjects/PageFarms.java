@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 /**
  * Farms page
  */
-public class PageFarms extends BasePageClass {
+public class PageFarms extends BasePage {
 
     /**
      * New Farm button
@@ -23,10 +23,22 @@ public class PageFarms extends BasePageClass {
     public WebElement farmLaunchSuccessMessage;
 
     /**
+     * Farm stop success message
+     */
+    @FindBy(xpath = "//div[text()='Farm successfully terminated. Instances termination can take a few minutes.']")
+    public WebElement farmStopSuccessMessage;
+
+    /**
      * Popup Terminate Farm Button
      */
     @FindBy(xpath = "(//span[text()='Terminate'])[2]")
     private WebElement popupTerminateFarmButton;
+
+    /**
+     * Terminating progress bar
+     */
+    @FindBy(xpath = "//div[text()='Terminating ...']")
+    protected WebElement terminatingBar;
 
     /**
      * Super constructor
@@ -50,6 +62,7 @@ public class PageFarms extends BasePageClass {
 
         waitForInvisibility(processingBar);
         popupTerminateFarmButton.click();
+        waitForInvisibility(terminatingBar);
     }
 
 }
