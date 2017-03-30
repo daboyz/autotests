@@ -7,7 +7,7 @@ import pageobjects.PageLogin;
 /**
  * Successfully logs in
  */
-public class LoginUserSuccess extends PageLoginTest {
+public class LoginUserSuccessTest extends PageLoginBaseTest {
 
     @Test (description = "Successful user login test")
     public void loginUserSuccess() {

@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 /**
  * Successfully stop Farm test
  */
-public class StopFarmSuccess extends PageFarmsTest {
+public class StopFarmSuccessTest extends PageFarmsBaseTest {
 
     /**
      * Stops Farm with given name
@@ -15,7 +15,8 @@ public class StopFarmSuccess extends PageFarmsTest {
     public void stopFarmSuccess() {
         authTests();
         switchToFarms();
-        setupFarmTest();
+        startCreateFarm();
+        setupAndLaunchNewEC2Farm();
 
         stopFarm();
 

@@ -5,7 +5,7 @@ import pageobjects.PageLogin;
 /**
  * Base Page Login test
  */
-public class PageLoginTest extends BaseTest {
+public class PageLoginBaseTest extends BaseTest {
 
     PageLogin pageLogin;
 

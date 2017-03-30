@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Base Page Farms test
  */
-public class PageFarmsTest extends BaseTest {
+public class PageFarmsBaseTest extends BaseTest {
 
     String generatedFarmName = "";
 
@@ -29,13 +29,6 @@ public class PageFarmsTest extends BaseTest {
     }
 
     public void setupAndLaunchNewEC2Farm() {
-        pageFarmDesigner = new PageFarmDesigner(driver);
-        generatedFarmName = "test-farm-" + dateFormat.format(new Date());
-        pageFarmDesigner.setupAndLaunchNewEC2Farm(generatedFarmName);
-    }
-
-    public void setupFarmTest() {
-        startCreateFarm();
         pageFarmDesigner = new PageFarmDesigner(driver);
         generatedFarmName = "test-farm-" + dateFormat.format(new Date());
         pageFarmDesigner.setupAndLaunchNewEC2Farm(generatedFarmName);

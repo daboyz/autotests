@@ -7,7 +7,7 @@ import pageobjects.PageLogin;
 /**
  * Tries a failed login attempt
  */
-public class LoginUserFailure extends PageLoginTest {
+public class LoginUserFailureTest extends PageLoginBaseTest {
 
     @Test (description = "Login with incorrect password test")
     public void loginUserFailure() {

@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 /**
  * Successfully create and launch EC2 Farms test
  */
-public class CreateAndLaunchEC2FarmSuccess extends PageFarmsTest {
+public class CreateAndLaunchEC2FarmSuccessTest extends PageFarmsBaseTest {
 
     /**
      * Creates Farm with Ubuntu 1404 base role, cleans up after confirmation
